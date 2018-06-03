@@ -1,5 +1,11 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import *
+from .serializers import *
+from rest_framework import generics
 
+# Create your views here.
+class TeamListCreate(generics.ListCreateAPIView):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
 
