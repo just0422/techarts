@@ -127,18 +127,18 @@ class Index extends Component {
                     initialValues = { initialValues }
                     validate={ this.validate }
                     onSubmit = { this.handleSubmit }
-                    render = {({ values, errors, touched, isSubmitting, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
+                    render = {({ values, errors, touched, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
                         <form onSubmit={handleSubmit}>
                             <IndexSelect name="campus" label="Campus" handleSelect={this.handleSelectCampus} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.state.campuses} campus={true} disabled={false} />
-                            {touched.campus && errors.campus && <div>{errors.campus}</div>}
+                            {touched.campus && errors.campus && <div className="form-error">{errors.campus}</div>}
 
                             <IndexSelect name="team" label="Team" handleSelect={this.handleSelectTeam} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.state.currentCampusTeams} campus={false} />
-                            {touched.team && errors.team && <div>{errors.team}</div>}
+                            {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
                             <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
-                            {touched.name && errors.name && <div>{errors.name}</div>}
+                            {touched.name && errors.name && <div className="form-error">{errors.name}</div>}
 
-                            <Button id="submit-button" type = "submit" disabled={ isSubmitting } className="blue" >Continue</Button>
+                            <Button id="submit-button" type = "submit" className="blue" >Continue</Button>
                         </form>
                     )} />
             )

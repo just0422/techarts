@@ -10,3 +10,11 @@ body {
 #submit-button {
     width: 100%;
 }
+
+.form-error {
+    color: red;
+    font-size: 10px;
+    line-height: 0;
+    position: relative;
+    top: -25px;
+}
