@@ -138,7 +138,7 @@ class Index extends Component {
                             <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
                             {touched.name && errors.name && <div>{errors.name}</div>}
 
-                            <Button type = "submit" disabled={ isSubmitting } >Continue</Button>
+                            <Button id="submit-button" type = "submit" disabled={ isSubmitting } className="blue" >Continue</Button>
                         </form>
                     )} />
             )
