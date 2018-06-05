@@ -1,10 +1,21 @@
 import React, { Component } from "react";
-import { Row, Input } from "react-materialize";
+import { Row, Input, Button } from "react-materialize";
 import ReactDOM from "react-dom";
+import { Formik } from 'formik';
 
 class IndexSelect extends Component {
     constructor(){
         super();
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e){
+        this.props.handleSelect(e);
+        if(e.target.value == '0')
+            this.props.setFieldValue(this.props.name, '')
+        else
+            this.props.setFieldValue(this.props.name, e.target.value)
     }
 
     render(){
@@ -16,7 +27,7 @@ class IndexSelect extends Component {
 
         return (
             <Row>
-                <Input s={12} type='select' label={this.props.label} onChange={this.props.handleSelect} defaultValue='0'>
+                <Input s={12} type='select' name={this.props.name} label={this.props.label} onChange={this.handleChange} onBlur={this.props.handleBlur} defaultValue='0'>
                     <option disabled value='0'>--Select a {this.props.label}--</option>
                     { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
                 </Input>
@@ -40,6 +51,9 @@ class Index extends Component {
 
         this.handleSelectCampus = this.handleSelectCampus.bind(this);
         this.handleSelectTeam = this.handleSelectTeam.bind(this);
+
+        this.validate = this.validate.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSelectCampus(event){
@@ -83,16 +97,50 @@ class Index extends Component {
             })
     }
 
+    validate(values){
+        console.log("Validate ")
+        console.log(values)
+
+        var errors = {}
+        if (!values.campus)
+            errors.campus = "Required"
+        if (!values.team)
+            errors.team = "Required"
+        if (!values.name)
+            errors.name = "Required"
+
+        return errors;
+    }
+
+    handleSubmit(values){
+    }
+
     render(){
+        var initialValues = {
+            campus: '',
+            team: '',
+            name: ''
+        }
         if (this.state.ready){
             return(
-                <div>
-                    <IndexSelect label="Campus" handleSelect={this.handleSelectCampus} options={this.state.campuses} campus={true} disabled={false} />
-                    <IndexSelect label="Team" handleSelect={this.handleSelectTeam} options={this.state.currentCampusTeams} campus={false} />
-                    <Row>
-                        <Input s={12} label="Name" />
-                    </Row>
-                </div>
+                <Formik
+                    initialValues = { initialValues }
+                    validate={ this.validate }
+                    onSubmit = { this.handleSubmit }
+                    render = {({ values, errors, touched, isSubmitting, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
+                        <form onSubmit={handleSubmit}>
+                            <IndexSelect name="campus" label="Campus" handleSelect={this.handleSelectCampus} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.state.campuses} campus={true} disabled={false} />
+                            {touched.campus && errors.campus && <div>{errors.campus}</div>}
+
+                            <IndexSelect name="team" label="Team" handleSelect={this.handleSelectTeam} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.state.currentCampusTeams} campus={false} />
+                            {touched.team && errors.team && <div>{errors.team}</div>}
+
+                            <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
+                            {touched.name && errors.name && <div>{errors.name}</div>}
+
+                            <Button type = "submit" disabled={ isSubmitting } >Continue</Button>
+                        </form>
+                    )} />
             )
         }
         else {
