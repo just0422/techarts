@@ -1,5 +1,6 @@
-from datetime import datetime
 from django.test import TestCase
+
+import datetime
 
 from ..models import *
 
@@ -89,7 +90,7 @@ class ChecklistTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.team = Team(team_name="A", campus="B")
-        cls.checklist = Checklist(person="P", date=datetime.now(), team=cls.team)
+        cls.checklist = Checklist(person="P", date=datetime.date.today(), team=cls.team)
     
     """
     Check that the __str__() function is valid
@@ -115,7 +116,7 @@ class ChecklistItemTest(TestCase):
         cls.team = Team(team_name="A", campus="B")
         cls.section = Section(section_name="1", page_number=1, team=cls.team)
         cls.question = Question(question_text="ABC", section=cls.section)
-        cls.checklist = Checklist(person="P", date=datetime.now(), team=cls.team)
+        cls.checklist = Checklist(person="P", date=datetime.date.today(), team=cls.team)
         cls.checklistitem = ChecklistItem(checked=True, checklist=cls.checklist, question=cls.question)
 
     """
