@@ -98,9 +98,6 @@ class Index extends Component {
     }
 
     validate(values){
-        console.log("Validate ")
-        console.log(values)
-
         var errors = {}
         if (!values.campus)
             errors.campus = "Required"
@@ -113,6 +110,8 @@ class Index extends Component {
     }
 
     handleSubmit(values){
+        var url = "/api/checklist/" + values.team + "/" + values.name;
+        fetch("http://127.0.0.1:8000" + url);
     }
 
     render(){
