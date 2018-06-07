@@ -1,100 +1,44 @@
 import React, { Component } from "react";
 import { Row, Input, Button } from "react-materialize";
-import ReactDOM from "react-dom";
 import { Formik } from 'formik';
+import { connect } from 'react-redux';
 
-class IndexSelect extends Component {
-    constructor(){
-        super();
+import IndexSelect from './IndexSelect';
+import { selectCampus, fetchTeams } from "../actions/index"
 
-        this.handleChange = this.handleChange.bind(this);
+const mapStateToProps = (store) => {
+    return {
+        ready: store.index.ready,
+        teams: store.index.teams,
+        campuses: store.index.campuses,
+        currentCampus: store.index.currentCampus,
+        currentCampusTeams: store.index.currentCampusTeams,
+        teamDisabled: store.index.teamDisabled
     }
+};
 
-    handleChange(e){
-        this.props.handleSelect(e);
-        if(e.target.value == '0')
-            this.props.setFieldValue(this.props.name, '')
-        else
-            this.props.setFieldValue(this.props.name, e.target.value)
-    }
-
-    render(){
-        var options = []
-        if (this.props.campus)
-            options = this.props.options.map((campus) => ({ id: campus, team_name: campus }))
-        else
-            options = this.props.options
-
-        return (
-            <Row>
-                <Input s={12} type='select' name={this.props.name} label={this.props.label} onChange={this.handleChange} onBlur={this.props.handleBlur} defaultValue='0'>
-                    <option disabled value='0'>--Select a {this.props.label}--</option>
-                    { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
-                </Input>
-            </Row>
-        )
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    selectCampus: (campus) => dispatch(selectCampus(campus)),
+    fetchTeams: () => dispatch(fetchTeams())
+});
 
 class Index extends Component {
     constructor(){
         super();
 
-        this.state = {
-            ready: false,
-            teams: [],
-            campuses: [],
-            currentCampus: '',
-            currentCampusTeams: [],
-            teamDisabled: true
-        }
-
         this.handleSelectCampus = this.handleSelectCampus.bind(this);
-        this.handleSelectTeam = this.handleSelectTeam.bind(this);
 
         this.validate = this.validate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSelectCampus(event){
-        var campus = event.target.value
-
-        var currentCampusTeams = [];
-        for(var i = 0; i < this.state.teams.length; i++)
-        {
-            var team = this.state.teams[i];
-
-            if (team['campus'] === campus)
-                currentCampusTeams.push(team);
-        }
-
-        this.setState({
-            currentCampus: campus,
-            currentCampusTeams: currentCampusTeams
-        })
-    }
-
-    handleSelectTeam(event){
+        var campus = event.target.value;
+        this.props.selectCampus(campus);
     }
 
     componentWillMount(){
-        fetch("http://127.0.0.1:8000/api/teams")
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-
-                var campuses = [];
-
-                for (var i = 0; i < data.length; i++){
-                    var entry = data[i];
-                    if (campuses.includes(entry['campus']))
-                        continue;
-                    campuses.push(entry['campus'])
-                }
-
-                this.setState({ready: true, teams: data, campuses: campuses})
-            })
+        this.props.fetchTeams();
     }
 
     validate(values){
@@ -110,8 +54,7 @@ class Index extends Component {
     }
 
     handleSubmit(values){
-        var url = "/api/checklist/" + values.team + "/" + values.name;
-        fetch("http://127.0.0.1:8000" + url);
+        //fetch("/api/checklist/" + values.team + "/" + values.name);
     }
 
     render(){
@@ -120,26 +63,29 @@ class Index extends Component {
             team: '',
             name: ''
         }
-        if (this.state.ready){
+        if (this.props.ready){
             return(
-                <Formik
-                    initialValues = { initialValues }
-                    validate={ this.validate }
-                    onSubmit = { this.handleSubmit }
-                    render = {({ values, errors, touched, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
-                        <form onSubmit={handleSubmit}>
-                            <IndexSelect name="campus" label="Campus" handleSelect={this.handleSelectCampus} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.state.campuses} campus={true} disabled={false} />
-                            {touched.campus && errors.campus && <div className="form-error">{errors.campus}</div>}
+                <div>
+                <h4 id="page-title">TechArts Checklists</h4>
+                    <Formik
+                        initialValues = { initialValues }
+                        validate={ this.validate }
+                        onSubmit = { this.handleSubmit }
+                        render = {({ values, errors, touched, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
+                            <form onSubmit={handleSubmit}>
+                                <IndexSelect name="campus" label="Campus" handleSelect={this.handleSelectCampus} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.props.campuses} campus={true} disabled={false} />
+                                {touched.campus && errors.campus && <div className="form-error">{errors.campus}</div>}
 
-                            <IndexSelect name="team" label="Team" handleSelect={this.handleSelectTeam} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.state.currentCampusTeams} campus={false} />
-                            {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
+                                <IndexSelect name="team" label="Team" handleSelect={this.handleSelectTeam} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.props.currentCampusTeams} campus={false} />
+                                {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
-                            <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
-                            {touched.name && errors.name && <div className="form-error">{errors.name}</div>}
+                                <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
+                                {touched.name && errors.name && <div className="form-error">{errors.name}</div>}
 
-                            <Button id="submit-button" type = "submit" className="blue" >Continue</Button>
-                        </form>
-                    )} />
+                                <Button id="submit-button" type = "submit" className="blue" >Continue</Button>
+                            </form>
+                        )} />
+                </div>
             )
         }
         else {
@@ -152,5 +98,4 @@ class Index extends Component {
     }
 }
 
-var wrapper = document.getElementById("index-page")
-wrapper ? ReactDOM.render(<Index />, wrapper) : null;
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
