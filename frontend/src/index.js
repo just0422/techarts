@@ -18,8 +18,7 @@ ReactDOM.render(<Provider store={store}>
         <div>
             <Switch>
                 <Route exact path="/" component={Index} />
-                <Route path="/checklist" name="checklist" component={NavigationBar} >
-                </Route>
+                <Route path="/checklist/" name="checklist" component={NavigationBar} />
             </Switch>
         </div>
     </ConnectedRouter>
