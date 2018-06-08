@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 
 import IndexSelect from './IndexSelect';
-import { selectCampus, fetchTeams } from "../actions/index"
+import { selectCampus, fetchTeams, submit } from "../actions/index"
 
 const mapStateToProps = (store) => {
     return {
@@ -18,8 +18,9 @@ const mapStateToProps = (store) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchTeams: () => dispatch(fetchTeams()),
     selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
-    fetchTeams: () => dispatch(fetchTeams())
+    submit: (values) => dispatch(submit(values))
 });
 
 class Index extends Component {
@@ -40,9 +41,7 @@ class Index extends Component {
         
     // Get team checklist
     handleSubmit(values){
-        console.log("Submitting: " + values)
-        console.log(this.props);
-        //fetch("/api/checklist/" + values.team + "/" + values.name);
+        this.props.submit(values);
     }
     
     // Get campuses and teams
@@ -99,10 +98,22 @@ class Index extends Component {
                                     campus={false} />
                                 {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
-                                <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
+                                <Row>
+                                    <Input 
+                                        s={12} 
+                                        name="name" 
+                                        label="Name" 
+                                        onChange={handleChange} 
+                                        onBlur={handleBlur} />
+                                </Row>
                                 {touched.name && errors.name && <div className="form-error">{errors.name}</div>}
 
-                                <Button id="submit-button" type = "submit" className="blue" >Continue</Button>
+                                <Button 
+                                    id="submit-button" 
+                                    type="submit" 
+                                    className="blue">
+                                    Continue
+                                </Button>
                             </form>
                         )} />
                 </div>

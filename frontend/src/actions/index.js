@@ -24,6 +24,25 @@ export function selectCampus(campus, teams){
     }
 }
 
+export function submit(values){
+    return (dispatch) => {
+        console.log("Starting here");
+        dispatch({type: consts.FETCH_CHECKLIST})
+
+        var url = consts.CHECKLIST + values.team + "/" + values.name
+
+        axios.get(url)
+            .then((response) => {
+                console.log(response);
+                // dispatch FETCH FULFILLED
+                // setup routes
+                // dispatch next page
+                // setup errors
+                // setup all 3 action tests
+            })
+    }
+}
+
 // Get teams from server
 export function fetchTeams(){
     return (dispatch) => {
