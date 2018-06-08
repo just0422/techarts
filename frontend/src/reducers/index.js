@@ -14,8 +14,12 @@ function index(
     switch(action.type){
         // Store selected campus and associated teams
         case consts.SELECT_CAMPUS: {
-            const { campus, teams } = action.payload;
-            return { ...state, currentCampus:campus, currentCampusTeams: teams }
+            const { currentCampus, currentCampusTeams } = action.payload;
+            return { 
+                ...state, 
+                currentCampus: currentCampus, 
+                currentCampusTeams: currentCampusTeams 
+            }
         }
         // Get teams from server
         case consts.FETCH_TEAMS: {

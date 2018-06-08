@@ -9,7 +9,8 @@ export default class IndexSelect extends Component {
     }
 
     handleChange(e){
-        this.props.handleSelect(e);
+        if (this.props.campus)
+            this.props.handleSelect(e);
         if(e.target.value === '0')
             this.props.setFieldValue(this.props.name, '')
         else

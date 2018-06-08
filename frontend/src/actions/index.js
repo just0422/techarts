@@ -3,12 +3,12 @@ import axios from "axios";
 import * as consts from "../constants";
 
 // Select teams associated with campus
-export function selectCampus(campus){
+export function selectCampus(campus, teams){
     return (dispatch) => {
         var currentCampusTeams = [];
-        for(var i = 0; i < this.state.teams.length; i++)
+        for(var i = 0; i < teams.length; i++)
         {
-            var team = this.state.teams[i];
+            var team = teams[i];
 
             if (team['campus'] === campus)
                 currentCampusTeams.push(team);
@@ -31,9 +31,10 @@ export function fetchTeams(){
         axios.get(consts.TEAMS)
             .then((response) => {
                 var campuses = [];
+                var data = response.data;
 
-                for (var i = 0; i < response.length; i++){
-                    var entry = response[i];
+                for (var i = 0; i < data.length; i++){
+                    var entry = data[i];
                     if (campuses.includes(entry['campus']))
                         continue;
                     campuses.push(entry['campus'])
@@ -43,7 +44,7 @@ export function fetchTeams(){
                     type: consts.FETCH_TEAMS_FULFILLED,
                     payload: {
                         ready: true,
-                        teams: response,
+                        teams: data,
                         campuses: campuses
                     }
                 })

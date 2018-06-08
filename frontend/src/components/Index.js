@@ -18,7 +18,7 @@ const mapStateToProps = (store) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    selectCampus: (campus) => dispatch(selectCampus(campus)),
+    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
     fetchTeams: () => dispatch(fetchTeams())
 });
 
@@ -34,7 +34,7 @@ class Index extends Component {
 
     handleSelectCampus(event){
         var campus = event.target.value;
-        this.props.selectCampus(campus);
+        this.props.selectCampus(campus, this.props.teams);
     }
 
     componentWillMount(){
@@ -54,6 +54,7 @@ class Index extends Component {
     }
 
     handleSubmit(values){
+        console.log("Submitting: " + values)
         //fetch("/api/checklist/" + values.team + "/" + values.name);
     }
 
@@ -63,6 +64,7 @@ class Index extends Component {
             team: '',
             name: ''
         }
+        console.log(this.props)
         if (this.props.ready){
             return(
                 <div>
@@ -73,10 +75,23 @@ class Index extends Component {
                         onSubmit = { this.handleSubmit }
                         render = {({ values, errors, touched, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
                             <form onSubmit={handleSubmit}>
-                                <IndexSelect name="campus" label="Campus" handleSelect={this.handleSelectCampus} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.props.campuses} campus={true} disabled={false} />
+                                <IndexSelect 
+                                    name="campus" 
+                                    label="Campus" 
+                                    handleSelect={this.handleSelectCampus} 
+                                    handleBlur={handleBlur} 
+                                    setFieldValue={setFieldValue} 
+                                    options={this.props.campuses} 
+                                    campus={true} />
                                 {touched.campus && errors.campus && <div className="form-error">{errors.campus}</div>}
 
-                                <IndexSelect name="team" label="Team" handleSelect={this.handleSelectTeam} handleBlur={handleBlur} setFieldValue={setFieldValue} options={this.props.currentCampusTeams} campus={false} />
+                                <IndexSelect 
+                                    name="team" 
+                                    label="Team" 
+                                    handleBlur={handleBlur} 
+                                    setFieldValue={setFieldValue} 
+                                    options={this.props.currentCampusTeams} 
+                                    campus={false} />
                                 {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
                                 <Row><Input s={12} name="name" label="Name" onChange={handleChange} onBlur={handleBlur} /></Row>
