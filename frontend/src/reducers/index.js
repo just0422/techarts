@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
-import * as consts from "../constants";
+import { routerReducer } from "react-router-redux";
 
+import * as consts from "../constants";
 import checklist from "./checklist";
+import navbar from "./navbar";
 
 function index(
     state={
@@ -14,15 +16,6 @@ function index(
         teamDisabled: true
     }, action){
     switch(action.type){
-        // Store selected campus and associated teams
-        case consts.SELECT_CAMPUS: {
-            const { currentCampus, currentCampusTeams } = action.payload;
-            return { 
-                ...state, 
-                currentCampus: currentCampus, 
-                currentCampusTeams: currentCampusTeams 
-            }
-        }
         // Get teams from server
         case consts.FETCH_TEAMS: {
             return { ...state, loading: true };
@@ -38,6 +31,15 @@ function index(
                 campuses: campuses
             }
         }
+        // Store selected campus and associated teams
+        case consts.SELECT_CAMPUS: {
+            const { currentCampus, currentCampusTeams } = action.payload;
+            return { 
+                ...state, 
+                currentCampus: currentCampus, 
+                currentCampusTeams: currentCampusTeams 
+            }
+        }
         default:
             return state;
     }
@@ -45,5 +47,6 @@ function index(
 
 export default combineReducers({
     index,
-    checklist
+    checklist,
+    navbar
 })

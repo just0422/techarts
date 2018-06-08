@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
 import { Row, Input, Button } from "react-materialize";
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
@@ -41,7 +42,7 @@ class Index extends Component {
         
     // Get team checklist
     handleSubmit(values){
-        this.props.submit(values);
+        this.props.submit(values)
     }
     
     // Get campuses and teams
@@ -111,7 +112,7 @@ class Index extends Component {
                                 <Button 
                                     id="submit-button" 
                                     type="submit" 
-                                    className="blue">
+                                    className="blue" >
                                     Continue
                                 </Button>
                             </form>
@@ -123,10 +124,6 @@ class Index extends Component {
             return <h5>Loading...</h5>;
         }
     }
-
-    componentWillUnmount(){
-        console.log("Must be getting here");
-    }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index));

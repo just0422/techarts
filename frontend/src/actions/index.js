@@ -1,4 +1,5 @@
 import axios from "axios";
+import { push } from  "connected-react-router";
 
 import * as consts from "../constants";
 
@@ -21,6 +22,7 @@ export function selectCampus(campus, teams){
                 currentCampusTeams: currentCampusTeams
             }
         })
+
     }
 }
 
@@ -30,7 +32,8 @@ export function submit(values){
 
         var url = consts.CHECKLIST + values.team + "/" + values.name
 
-        axios.get(url)
+        dispatch(push("/checklist"))
+       /* axios.get(url)
             .then((response) => {
                 const { id, person, date, team } = response.data
                 dispatch({
@@ -42,12 +45,15 @@ export function submit(values){
                         team: team
                     }
                 })
-                // dispatch FETCH FULFILLED
+               
+               
+
                 // setup routes
                 // dispatch next page
                 // setup errors
                 // setup all 3 action tests
-            })
+                // setup loaders
+            })*/
     }
 }
 

@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import promise from "redux-promise-middleware"
 
 
-import reducer from "./reducers"
+import reducers from "./reducers"
 
 export const history = createHistory()
 const middleware = applyMiddleware(
@@ -15,7 +15,7 @@ const middleware = applyMiddleware(
     thunk, 
     logger)
 const store = createStore(
-    connectRouter(history)(reducer),
+    connectRouter(history)(reducers),
     middleware
 )
 
