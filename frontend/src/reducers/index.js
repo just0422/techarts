@@ -1,5 +1,7 @@
-import { combineReducers } from "redux"
+import { combineReducers } from "redux";
 import * as consts from "../constants";
+
+import checklist from "./checklist";
 
 function index(
     state={
@@ -42,5 +44,6 @@ function index(
 }
 
 export default combineReducers({
-    index
+    index,
+    checklist
 })

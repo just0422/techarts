@@ -26,14 +26,22 @@ export function selectCampus(campus, teams){
 
 export function submit(values){
     return (dispatch) => {
-        console.log("Starting here");
         dispatch({type: consts.FETCH_CHECKLIST})
 
         var url = consts.CHECKLIST + values.team + "/" + values.name
 
         axios.get(url)
             .then((response) => {
-                console.log(response);
+                const { id, person, date, team } = response.data
+                dispatch({
+                    type: consts.FETCH_CHECKLIST_FULFILLED, 
+                    payload: {
+                        id: id,
+                        person: person,
+                        date: date,
+                        team: team
+                    }
+                })
                 // dispatch FETCH FULFILLED
                 // setup routes
                 // dispatch next page
