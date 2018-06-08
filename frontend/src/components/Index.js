@@ -31,16 +31,26 @@ class Index extends Component {
         this.validate = this.validate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    
+    // Handler for campus selection
     handleSelectCampus(event){
         var campus = event.target.value;
         this.props.selectCampus(campus, this.props.teams);
     }
-
+        
+    // Get team checklist
+    handleSubmit(values){
+        console.log("Submitting: " + values)
+        console.log(this.props);
+        //fetch("/api/checklist/" + values.team + "/" + values.name);
+    }
+    
+    // Get campuses and teams
     componentWillMount(){
         this.props.fetchTeams();
     }
-
+    
+    // Form Validation
     validate(values){
         var errors = {}
         if (!values.campus)
@@ -53,18 +63,13 @@ class Index extends Component {
         return errors;
     }
 
-    handleSubmit(values){
-        console.log("Submitting: " + values)
-        //fetch("/api/checklist/" + values.team + "/" + values.name);
-    }
-
     render(){
         var initialValues = {
             campus: '',
             team: '',
             name: ''
         }
-        console.log(this.props)
+
         if (this.props.ready){
             return(
                 <div>

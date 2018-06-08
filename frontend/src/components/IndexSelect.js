@@ -7,7 +7,8 @@ export default class IndexSelect extends Component {
 
         this.handleChange = this.handleChange.bind(this);
     }
-
+    
+    // Handle select changed by returning name to parent
     handleChange(e){
         if (this.props.campus)
             this.props.handleSelect(e);
@@ -16,9 +17,12 @@ export default class IndexSelect extends Component {
         else
             this.props.setFieldValue(this.props.name, e.target.value)
     }
-
+    
+    // REnder select element
     render(){
         var options = []
+
+        // Convert campus to match format of Teams for some DRY code
         if (this.props.campus)
             options = this.props.options.map((campus) => ({ id: campus, team_name: campus }))
         else

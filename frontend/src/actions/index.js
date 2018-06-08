@@ -24,12 +24,14 @@ export function selectCampus(campus, teams){
     }
 }
 
+// Get teams from server
 export function fetchTeams(){
     return (dispatch) => {
         dispatch({type: consts.FETCH_TEAMS})
 
         axios.get(consts.TEAMS)
             .then((response) => {
+                // Filter out unique campuses
                 var campuses = [];
                 var data = response.data;
 
