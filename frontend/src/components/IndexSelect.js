@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Input } from "react-materialize";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 export default class IndexSelect extends Component {
     constructor(){
@@ -29,12 +29,13 @@ export default class IndexSelect extends Component {
             options = this.props.options
 
         return (
-            <Row>
-                <Input s={12} type='select' name={this.props.name} label={this.props.label} onChange={this.handleChange} onBlur={this.props.handleBlur} defaultValue='0'>
+			<FormGroup controlId={this.props.label}>
+				<ControlLabel>{this.props.label}</ControlLabel>
+				<FormControl componentClass="select">
                     <option disabled value='0'>--Select a {this.props.label}--</option>
                     { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
-                </Input>
-            </Row>
+				</FormControl>
+			</FormGroup>
         )
     }
 }

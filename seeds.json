@@ -1,0 +1,28 @@
+[
+	{
+		"model":"checklist.team",
+		"pk":1,
+		"fields":{
+			"team_name":"lighting",
+			"campus":"CTG"
+		}
+	},
+	{
+		"model":"checklist.team",
+		"pk":2,
+		"fields":{
+			"team_name":"lighting",
+			"campus":"CTB"
+		}
+	},
+	{
+		"model":"checklist.team",
+		"pk":3,
+		"fields":{
+			"team_name":"audio",
+			"campus":"CTG"
+		}
+	}
+]
+
+

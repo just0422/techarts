@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Navbar, NavItem, Dropdown, Button, Row } from "react-materialize";
+import { Navbar, Nav, NavDropdown, MenuItem } from "react-bootstrap";
 
 import { fetchTeams } from "../actions/index";
+import "../stylesheets/navbar.css";
+
 
 const mapStateToProps = (store) => {
     return {
@@ -40,25 +42,33 @@ class NavigationBar extends Component {
             for(var i = 0; i < campuses.length; i++){
                 campusTeams[campuses[i]] = 
                     campusTeams[campuses[i]].map( (team) => {
-                        return <NavItem key={team.id}>{team.team_name}</NavItem>
+                        return <MenuItem key={team.id} className="navbar-item">{team.team_name}</MenuItem>
                     })
             }
             
             // Convert each campus into a <Dropdown> with <NavItem> teams
             campusTeams = campuses.map( (campus, index) => {
                 return (
-                    <Row key={index}>
-                        <Dropdown trigger={ <Button>{campus}</Button> } >
-                            { campusTeams[campus] }
-                        </Dropdown>
-                    </Row>
+					<NavDropdown title={campus} key={index}>
+						{ campusTeams[campus] }
+					</NavDropdown>
                 )
             })
 
             return (
-                <Navbar brand="TechArts" right className="blue">
-                    {campusTeams}
-                </Navbar>
+				<Navbar collapseOnSelect>
+					<Navbar.Header>
+					    <Navbar.Brand>
+						      <a href="#brand">React-Bootstrap</a>
+						</Navbar.Brand>
+						<Navbar.Toggle />
+					</Navbar.Header>
+					<Navbar.Collapse>
+					    <Nav>
+							{campusTeams}
+						</Nav>
+					</Navbar.Collapse>
+				</Navbar>
             )
         }
         else return <h5>Loading</h5>

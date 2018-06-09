@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
-import { Row, Input, Button } from "react-materialize";
+import { Grid, Row, FormGroup, ControlLabel, FormControl, Button } from "react-bootstrap";
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 
@@ -74,38 +74,45 @@ class Index extends Component {
             return(
                 <div>
                 <h4 id="page-title">TechArts Checklists</h4>
+				<Grid>
                     <Formik
                         initialValues = { initialValues }
                         validate={ this.validate }
                         onSubmit = { this.handleSubmit }
                         render = {({ values, errors, touched, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
                             <form onSubmit={handleSubmit}>
-                                <IndexSelect 
-                                    name="campus" 
-                                    label="Campus" 
-                                    handleSelect={this.handleSelectCampus} 
-                                    handleBlur={handleBlur} 
-                                    setFieldValue={setFieldValue} 
-                                    options={this.props.campuses} 
-                                    campus={true} />
+								<Row>
+									<IndexSelect 
+										name="campus" 
+										label="Campus" 
+										handleSelect={this.handleSelectCampus} 
+										handleBlur={handleBlur} 
+										setFieldValue={setFieldValue} 
+										options={this.props.campuses} 
+										campus={true} />
+								</Row>
                                 {touched.campus && errors.campus && <div className="form-error">{errors.campus}</div>}
-
-                                <IndexSelect 
-                                    name="team" 
-                                    label="Team" 
-                                    handleBlur={handleBlur} 
-                                    setFieldValue={setFieldValue} 
-                                    options={this.props.currentCampusTeams} 
-                                    campus={false} />
+							
+								<Row>
+									<IndexSelect 
+										name="team" 
+										label="Team" 
+										handleBlur={handleBlur} 
+										setFieldValue={setFieldValue} 
+										options={this.props.currentCampusTeams} 
+										campus={false} />
+								</Row>
                                 {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
                                 <Row>
-                                    <Input 
-                                        s={12} 
-                                        name="name" 
-                                        label="Name" 
-                                        onChange={handleChange} 
-                                        onBlur={handleBlur} />
+									<FormGroup controlId="person_name">
+										<ControlLabel>Name</ControlLabel>
+										<FormControl
+											xs={12}
+											type="text"
+											onChange={handleChange} 
+											onBlur={handleBlur} />
+									</FormGroup>
                                 </Row>
                                 {touched.name && errors.name && <div className="form-error">{errors.name}</div>}
 
@@ -117,6 +124,7 @@ class Index extends Component {
                                 </Button>
                             </form>
                         )} />
+				</Grid>
                 </div>
             )
         }
