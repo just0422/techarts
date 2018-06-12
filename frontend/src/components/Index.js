@@ -42,7 +42,9 @@ class Index extends Component {
         
     // Get team checklist
     handleSubmit(values){
-        this.props.submit(values)
+        console.log("submitting");
+        console.log(values);
+        //this.props.submit(values)
     }
     
     // Get campuses and teams
@@ -67,7 +69,7 @@ class Index extends Component {
         var initialValues = {
             campus: '',
             team: '',
-            name: ''
+            person_name: ''
         }
 
         if (this.props.ready){
@@ -91,15 +93,15 @@ class Index extends Component {
                                             setFieldValue={setFieldValue} 
                                             options={this.props.campuses} 
                                             campus={true} />
-                                        {   
-                                            touched.campus && errors.campus && 
-                                            <Col xs={12}>
-                                                <div className="form-error">
-                                                    {errors.campus}
-                                                </div>
-                                            </Col>
-                                        }
                                     </Col>
+                                    {   
+                                        touched.campus && errors.campus && 
+                                        <Col xs={12}>
+                                            <div className="form-error">
+                                                {errors.campus}
+                                            </div>
+                                        </Col>
+                                    }
                                 </Row>
                             
                                 <Row className="index-form-row">
@@ -112,8 +114,15 @@ class Index extends Component {
                                             options={this.props.currentCampusTeams} 
                                             campus={false} />
                                     </Col>
+                                    {
+                                        touched.team && errors.team && 
+                                        <Col xs={12}>
+                                            <div className="form-error">
+                                                {errors.team}
+                                            </div>
+                                        </Col>
+                                    }
                                 </Row>
-                                {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
                                 <Row className="index-form-row">
                                     <Col xs={12}>
@@ -128,10 +137,10 @@ class Index extends Component {
                                     </Col>
 
                                     {
-                                        touched.name && errors.name && 
+                                        touched.person_name && errors.pseron_name && 
                                         <Col xs={12}>
                                             <div className="form-error">
-                                                {errors.name}
+                                                {errors.person_name}
                                             </div>
                                         </Col>
                                     }
