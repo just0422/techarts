@@ -41,15 +41,17 @@ class NavigationBar extends Component {
             // Convert each team into a <NavItem>
             for(var i = 0; i < campuses.length; i++){
                 campusTeams[campuses[i]] = 
-                    campusTeams[campuses[i]].map( (team) => {
-                        return <MenuItem key={team.id} className="navbar-item">{team.team_name}</MenuItem>
+                    campusTeams[campuses[i]].map( (team, j) => {
+                        var eventKey = i.toString() + "." + j.toString();
+                        return <MenuItem key={eventKey} eventKey={eventKey} className="navbar-item">{team.team_name}</MenuItem>
                     })
             }
             
             // Convert each campus into a <Dropdown> with <NavItem> teams
             campusTeams = campuses.map( (campus, index) => {
                 return (
-					<NavDropdown title={campus} key={index}>
+					<NavDropdown title={campus} key={index} id={index}
+                    eventKey={i}>
 						{ campusTeams[campus] }
 					</NavDropdown>
                 )
@@ -59,7 +61,7 @@ class NavigationBar extends Component {
 				<Navbar collapseOnSelect>
 					<Navbar.Header>
 					    <Navbar.Brand>
-						      <a href="#brand">React-Bootstrap</a>
+						  <a href="/">Tech Arts</a>
 						</Navbar.Brand>
 						<Navbar.Toggle />
 					</Navbar.Header>

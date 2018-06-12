@@ -43,7 +43,6 @@ function index(
             }
         }
         case consts.SELECT_TEAM: {
-            console.log(action.payload);
             const { currentTeam } = action.payload;
             return {
                 ...state,

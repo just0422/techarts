@@ -51,9 +51,7 @@ class Index extends Component {
         
     // Get team checklist
     handleSubmit(values){
-        console.log("submitting");
-        console.log(values);
-        //this.props.submit(values)
+        this.props.submit(values)
     }
     
     // Get campuses and teams
@@ -68,8 +66,8 @@ class Index extends Component {
             errors.campus = "Required"
         if (!values.team)
             errors.team = "Required"
-        if (!values.name)
-            errors.name = "Required"
+        if (!values.person_name)
+            errors.person_name = "Required"
 
         return errors;
     }

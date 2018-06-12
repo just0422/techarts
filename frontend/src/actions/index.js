@@ -28,7 +28,6 @@ export function selectCampus(campus, teams){
 
 export function selectTeam(team){
     return (dispatch) => {
-        console.log(team);
         dispatch({
             type: consts.SELECT_TEAM,
             payload: {
