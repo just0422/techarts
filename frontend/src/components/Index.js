@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
-import { Grid, Row, FormGroup, ControlLabel, FormControl, Button } from "react-bootstrap";
+import { Grid, Row, FormGroup, ControlLabel, FormControl, Button, Col } from "react-bootstrap";
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 
@@ -73,7 +73,7 @@ class Index extends Component {
         if (this.props.ready){
             return(
                 <div>
-                <h4 id="page-title">TechArts Checklists</h4>
+                <h1 id="page-title" className="display-4">TechArts Checklists</h1>
 				<Grid>
                     <Formik
                         initialValues = { initialValues }
@@ -81,47 +81,73 @@ class Index extends Component {
                         onSubmit = { this.handleSubmit }
                         render = {({ values, errors, touched, handleSubmit, handleChange, setFieldValue, handleBlur }) => (
                             <form onSubmit={handleSubmit}>
-								<Row>
-									<IndexSelect 
-										name="campus" 
-										label="Campus" 
-										handleSelect={this.handleSelectCampus} 
-										handleBlur={handleBlur} 
-										setFieldValue={setFieldValue} 
-										options={this.props.campuses} 
-										campus={true} />
-								</Row>
-                                {touched.campus && errors.campus && <div className="form-error">{errors.campus}</div>}
-							
-								<Row>
-									<IndexSelect 
-										name="team" 
-										label="Team" 
-										handleBlur={handleBlur} 
-										setFieldValue={setFieldValue} 
-										options={this.props.currentCampusTeams} 
-										campus={false} />
-								</Row>
+                                <Row className="index-form-row">
+                                    <Col xs={12}>
+                                        <IndexSelect 
+                                            name="campus" 
+                                            label="Campus" 
+                                            handleSelect={this.handleSelectCampus} 
+                                            handleBlur={handleBlur} 
+                                            setFieldValue={setFieldValue} 
+                                            options={this.props.campuses} 
+                                            campus={true} />
+                                        {   
+                                            touched.campus && errors.campus && 
+                                            <Col xs={12}>
+                                                <div className="form-error">
+                                                    {errors.campus}
+                                                </div>
+                                            </Col>
+                                        }
+                                    </Col>
+                                </Row>
+                            
+                                <Row className="index-form-row">
+                                    <Col xs={12}>
+                                        <IndexSelect 
+                                            name="team" 
+                                            label="Team" 
+                                            handleBlur={handleBlur} 
+                                            setFieldValue={setFieldValue} 
+                                            options={this.props.currentCampusTeams} 
+                                            campus={false} />
+                                    </Col>
+                                </Row>
                                 {touched.team && errors.team && <div className="form-error">{errors.team}</div>}
 
-                                <Row>
-									<FormGroup controlId="person_name">
-										<ControlLabel>Name</ControlLabel>
-										<FormControl
-											xs={12}
-											type="text"
-											onChange={handleChange} 
-											onBlur={handleBlur} />
-									</FormGroup>
-                                </Row>
-                                {touched.name && errors.name && <div className="form-error">{errors.name}</div>}
+                                <Row className="index-form-row">
+                                    <Col xs={12}>
+                                        <FormGroup bsSize="lg" controlId="person_name">
+                                            <ControlLabel>Name</ControlLabel>
+                                            <FormControl
+                                                xs={12}
+                                                type="text"
+                                                onChange={handleChange} 
+                                                onBlur={handleBlur} />
+                                        </FormGroup>
+                                    </Col>
 
-                                <Button 
-                                    id="submit-button" 
-                                    type="submit" 
-                                    className="blue" >
-                                    Continue
-                                </Button>
+                                    {
+                                        touched.name && errors.name && 
+                                        <Col xs={12}>
+                                            <div className="form-error">
+                                                {errors.name}
+                                            </div>
+                                        </Col>
+                                    }
+                                </Row>
+                                
+                                <Row className="index-form-row">
+                                    <Col xs={12}>
+                                        <Button 
+                                            id="submit-button" 
+                                            type="submit" 
+                                            bsStyle="primary"
+                                            bsSize="large">
+                                            Continue
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </form>
                         )} />
 				</Grid>

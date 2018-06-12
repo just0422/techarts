@@ -31,7 +31,8 @@ export default class IndexSelect extends Component {
         return (
 			<FormGroup controlId={this.props.label}>
 				<ControlLabel>{this.props.label}</ControlLabel>
-				<FormControl componentClass="select">
+				<FormControl componentClass="select" defaultValue="0"
+                className="index-form-select">
                     <option disabled value='0'>--Select a {this.props.label}--</option>
                     { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
 				</FormControl>
