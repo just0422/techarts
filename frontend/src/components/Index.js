@@ -5,13 +5,14 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 
 import IndexSelect from './IndexSelect';
-import { selectCampus, fetchTeams, submit } from "../actions/index"
+import { selectTeam, selectCampus, fetchTeams, submit } from "../actions/index"
 
 const mapStateToProps = (store) => {
     return {
         ready: store.index.ready,
         teams: store.index.teams,
         campuses: store.index.campuses,
+        currentTeam: store.index.currentTeam,
         currentCampus: store.index.currentCampus,
         currentCampusTeams: store.index.currentCampusTeams,
         teamDisabled: store.index.teamDisabled
@@ -21,6 +22,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
     selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
+    selectTeam: (team) => dispatch(selectTeam(team)),
     submit: (values) => dispatch(submit(values))
 });
 
@@ -29,6 +31,7 @@ class Index extends Component {
         super();
 
         this.handleSelectCampus = this.handleSelectCampus.bind(this);
+        this.handleSelectTeam = this.handleSelectTeam.bind(this);
 
         this.validate = this.validate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,6 +41,12 @@ class Index extends Component {
     handleSelectCampus(event){
         var campus = event.target.value;
         this.props.selectCampus(campus, this.props.teams);
+    }
+    
+    // Handler for team selection
+    handleSelectTeam(event){
+        var team = event.target.value;
+        this.props.selectTeam(team);
     }
         
     // Get team checklist
@@ -92,6 +101,7 @@ class Index extends Component {
                                             handleBlur={handleBlur} 
                                             setFieldValue={setFieldValue} 
                                             options={this.props.campuses} 
+                                            value={this.props.currentCampus}
                                             campus={true} />
                                     </Col>
                                     {   
@@ -109,9 +119,11 @@ class Index extends Component {
                                         <IndexSelect 
                                             name="team" 
                                             label="Team" 
+                                            handleSelect={this.handleSelectTeam} 
                                             handleBlur={handleBlur} 
                                             setFieldValue={setFieldValue} 
                                             options={this.props.currentCampusTeams} 
+                                            value={this.props.currentTeam}
                                             campus={false} />
                                     </Col>
                                     {
@@ -159,7 +171,7 @@ class Index extends Component {
                                 </Row>
                             </form>
                         )} />
-				</Grid>
+    				</Grid>
                 </div>
             )
         }

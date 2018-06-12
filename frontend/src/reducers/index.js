@@ -11,7 +11,8 @@ function index(
         loading: false,
         teams: [],
         campuses: [],
-        currentCampus: '',
+        currentTeam: '0',
+        currentCampus: '0',
         currentCampusTeams: [],
         teamDisabled: true
     }, action){
@@ -37,7 +38,16 @@ function index(
             return { 
                 ...state, 
                 currentCampus: currentCampus, 
-                currentCampusTeams: currentCampusTeams 
+                currentCampusTeams: currentCampusTeams ,
+                currentTeam: '0'
+            }
+        }
+        case consts.SELECT_TEAM: {
+            console.log(action.payload);
+            const { currentTeam } = action.payload;
+            return {
+                ...state,
+                currentTeam: currentTeam
             }
         }
         default:

@@ -10,8 +10,7 @@ export default class IndexSelect extends Component {
     
     // Handle select changed by returning name to parent
     handleChange(e){
-        if (this.props.campus)
-            this.props.handleSelect(e);
+        this.props.handleSelect(e);
         if(e.target.value === '0')
             this.props.setFieldValue(this.props.name, '')
         else
@@ -33,13 +32,13 @@ export default class IndexSelect extends Component {
 				<ControlLabel>{this.props.label}</ControlLabel>
 				<FormControl 
                     componentClass="select" 
-                    defaultValue="0"
                     className="index-form-select"
                     onChange={this.handleChange}
-                    onBlur={this.handleBlur}>
-                    <option disabled value='0'>--Select a {this.props.label}--</option>
-                    { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
-				</FormControl>
+                    onBlur={this.handleBlur}
+                    value={this.props.value}>
+                        <option disabled value='0'>--Select a {this.props.label}--</option>
+                        { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
+                </FormControl>
 			</FormGroup>
         )
     }

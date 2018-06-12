@@ -26,6 +26,18 @@ export function selectCampus(campus, teams){
     }
 }
 
+export function selectTeam(team){
+    return (dispatch) => {
+        console.log(team);
+        dispatch({
+            type: consts.SELECT_TEAM,
+            payload: {
+                currentTeam: team
+            }
+        })
+    }
+}
+
 export function submit(values){
     return (dispatch) => {
         dispatch({type: consts.FETCH_CHECKLIST})
