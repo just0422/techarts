@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import IndexSelect from './IndexSelect';
 import { selectCampus } from "../actions/index"
-import { selectTeam, fetchTeams, fetchChecklist } from "../actions/generics"
+import { selectTeam, fetchTeams, startChecklist } from "../actions/generics"
 
 const mapStateToProps = (store) => {
     return {
@@ -22,7 +22,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
-    fetchChecklist: (values) => dispatch(fetchChecklist(values)),
+    startChecklist: (values) => dispatch(startChecklist(values)),
     selectTeam: (team) => dispatch(selectTeam(team)),
     selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams))
 });
@@ -52,7 +52,7 @@ class Index extends Component {
         
     // Get team checklist
     handleSubmit(values){
-        this.props.fetchChecklist(values)
+        this.props.startChecklist(values)
     }
     
     // Get campuses and teams

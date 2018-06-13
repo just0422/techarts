@@ -2,11 +2,12 @@ import * as consts from "../constants"
 
 export default function reducer(
     state={
-        loading: false,
         id: -1,
-        person: '',
         date: '',
-        team: ''
+        team: '',
+        person: '',
+        loading: false,
+        checklistReady: false
     }, action){
     switch(action.type){
         case consts.FETCH_CHECKLIST: {
@@ -22,7 +23,8 @@ export default function reducer(
                 id: id,
                 person: person,
                 date: date,
-                team: team
+                team: team,
+                checklistReady: true
             }
         }
         default:

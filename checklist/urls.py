@@ -4,5 +4,5 @@ from . import views
 app_name="checklist"
 urlpatterns = [
     path('api/teams/', views.TeamList.as_view(), name="index" ),
-    path('api/checklist/<int:team>/<str:name>/', views.ChecklistView.as_view(), name="checklist"),
+    path('api/checklist/<str:name>/<int:team>/', views.ChecklistView.as_view(), name="checklist"),
 ]

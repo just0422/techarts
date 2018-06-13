@@ -15,12 +15,22 @@ export function selectTeam(team){
     }
 }
 
-// Gather checklist for current team
+// Move over to checklist page
 //      values = {
 //          personName: '',
 //          campus: '',
 //          team: 0
 //      }
+export function startChecklist(values){
+    return (dispatch) => {
+        var { person_name, team } = values;
+        var url = "/checklist/" + person_name + "/" + team;
+
+        dispatch(push(url));
+    }
+}
+
+// Gather checklist for current team from server
 export function fetchChecklist(values){
     return (dispatch) => {
         var { person_name, team } = values
@@ -30,7 +40,24 @@ export function fetchChecklist(values){
             type: consts.FETCH_CHECKLIST,
             payload: values
         })
-        dispatch(push(url));
+
+        console.log("Fetching - /api" + url);
+
+		axios.get("/api" + url)
+            .then((response) => {
+                const { id, person, date, team } = response.data
+                dispatch({
+                    type: consts.FETCH_CHECKLIST_FULFILLED, 
+                    payload: {
+                        id: id,
+                        person: person,
+                        date: date,
+                        team: team
+                    }
+                })
+                console.log("Got Got");
+
+            })
     }
 }
 

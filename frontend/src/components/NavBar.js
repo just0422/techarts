@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavDropdown, MenuItem } from "react-bootstrap";
 
-import { fetchTeams, fetchChecklist, selectTeam } from "../actions/generics";
+import { fetchTeams, startChecklist, selectTeam } from "../actions/generics";
 import "../stylesheets/navbar.css";
 
 
@@ -17,7 +17,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
-    fetchChecklist: (values) => dispatch(fetchChecklist(values)),
+    startChecklist: (values) => dispatch(startChecklist(values)),
     selectTeam: (teamId) => dispatch(selectTeam(teamId))
 });
 
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
 class NavigationBar extends Component {
     handleClick(teamId, event){
         this.props.selectTeam(teamId);
-        this.props.fetchChecklist({
+        this.props.startChecklist({
             team: teamId,
             person_name: this.props.person_name
         })
