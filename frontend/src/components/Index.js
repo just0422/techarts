@@ -5,7 +5,8 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 
 import IndexSelect from './IndexSelect';
-import { selectTeam, selectCampus, fetchTeams, submit } from "../actions/index"
+import { selectCampus } from "../actions/index"
+import { selectTeam, fetchTeams, fetchChecklist } from "../actions/generics"
 
 const mapStateToProps = (store) => {
     return {
@@ -21,9 +22,9 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
-    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
+    fetchChecklist: (values) => dispatch(fetchChecklist(values))
     selectTeam: (team) => dispatch(selectTeam(team)),
-    submit: (values) => dispatch(submit(values))
+    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
 });
 
 class Index extends Component {
@@ -51,7 +52,7 @@ class Index extends Component {
         
     // Get team checklist
     handleSubmit(values){
-        this.props.submit(values)
+        this.props.fetchChecklist(values)
     }
     
     // Get campuses and teams

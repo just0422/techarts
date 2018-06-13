@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavDropdown, MenuItem } from "react-bootstrap";
 
-import { fetchTeams } from "../actions/index";
+import { fetchTeams, selectTeam } from "../actions/generics";
 import "../stylesheets/navbar.css";
 
 
@@ -16,25 +16,23 @@ const mapStateToProps = (store) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchTeams: () => dispatch(fetchTeams())
+    fetchTeams: () => dispatch(fetchTeams()),
+    selectTeam: (teamId) => dispatch(selectTeam(teamId))
 });
 
 
 class NavigationBar extends Component {
-    constructor(){
-        super();
-
-        this.teamToMenuItem = this.teamToMenuItem
+    handleClick(teamId, event){
+        this.props.selectTeam(teamId);
     }
-
-    teamToMenuItem(team, i, j){
-    }
-
+    
+    // Get teams from the server
     componentWillMount(){
         if (!this.props.ready)
            this.props.fetchTeams();
     }
-
+    
+    // When ready, render Nav to the screen
     render(){
         if (this.props.ready){
             var i, team, eventKey, cTeams;
@@ -49,20 +47,21 @@ class NavigationBar extends Component {
                     campusTeams[team.campus] = [];
                 campusTeams[team.campus].push(team);
             }
-            
+
             // Convert each team into a <MenuItem>
             for( i = 0; i < campuses.length; i++ ){
                 // Simplify teams into smaller variable;
                 cTeams = campusTeams[campuses[i]];
 
-                for(var j = 0; i < cTeams.length; j++){
+                for(var j = 0; j < cTeams.length; j++){
                     eventKey = i.toString() + "." + j.toString();
                     team = cTeams[j];
 
                     cTeams[j] = <MenuItem
                                     key={eventKey} 
                                     eventKey={eventKey} 
-                                    className="navbar-item">
+                                    className="navbar-item"
+                                    onClick={this.handleClick.bind(this, team.id)}>
                                         {team.team_name}
                                 </MenuItem>;
                 }
