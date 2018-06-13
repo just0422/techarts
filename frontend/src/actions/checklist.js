@@ -7,8 +7,8 @@ export function fetchChecklist(person_name, team){
     return (dispatch) => {
         dispatch({ type: consts.FETCH_CHECKLIST })
         
-        var url = "/checklist/" + person_name + "/" + team;
-		axios.get("/api" + url)
+        var url = "/api/checklist/" + person_name + "/" + team;
+		axios.get(url)
             .then((response) => {
                 const { id, person, date, team } = response.data
                 dispatch({
@@ -24,3 +24,19 @@ export function fetchChecklist(person_name, team){
     }
 }
 
+export function fetchSections(team){
+    return (dispatch) => {
+        dispatch({ type: consts.FETCH_SECTIONS })
+
+        var url = "/api/sections/" + team;
+        axios.get(url)
+            .then((response) => {
+                dispatch({
+                    type: consts.FETCH_SECTIONS_FULFILLED,
+                    payload: {
+                        sections: response.data
+                    }
+                })
+            })
+    }
+}

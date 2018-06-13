@@ -7,7 +7,9 @@ export default function reducer(
         team: '',
         person: '',
         loading: false,
-        checklistReady: false
+        sections: [],
+        checklistReady: false,
+        sectionsReady: false
     }, action){
     switch(action.type){
         case consts.FETCH_CHECKLIST: {
@@ -25,6 +27,21 @@ export default function reducer(
                 date: date,
                 team: team,
                 checklistReady: true
+            }
+        }
+        case consts.FETCH_SECTIONS: {
+            return {
+                ...state,
+                sectionsReady: false,
+                loading: true
+            }
+        }
+        case consts.FETCH_SECTIONS_FULFILLED: {
+            const { sections } = action.payload;
+            return {
+                ...state,
+                sections: sections,
+                sectionsReady: true
             }
         }
         default:

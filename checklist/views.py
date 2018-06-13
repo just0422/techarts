@@ -32,9 +32,14 @@ class ChecklistView(generics.RetrieveAPIView):
         queryset = self.get_queryset()
         return get_object_or_404(queryset)
 
+# Get all sections for this team
+class SectionView(generics.ListAPIView):
+    serializer_class=SectionSerializer
+
+    def get_queryset(self):
+        return Section.objects.filter(team = Team.objects.get(id=self.kwargs.get('team')))
 
 # Return all questions (with team)
-# Return all sections (with team)
 
 # View
 # Create all checklist items

@@ -10,3 +10,8 @@ class ChecklistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checklist
         fields = '__all__'
+
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = ['id', 'section_name', 'page_number']

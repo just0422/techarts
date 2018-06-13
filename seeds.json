@@ -1,28 +1,65 @@
 [
-	{
-		"model":"checklist.team",
-		"pk":1,
-		"fields":{
-			"team_name":"lighting",
-			"campus":"CTG"
-		}
-	},
-	{
-		"model":"checklist.team",
-		"pk":2,
-		"fields":{
-			"team_name":"lighting",
-			"campus":"CTB"
-		}
-	},
-	{
-		"model":"checklist.team",
-		"pk":3,
-		"fields":{
-			"team_name":"audio",
-			"campus":"CTG"
-		}
-	}
+{
+    "model": "checklist.team",
+    "pk": 1,
+    "fields": {
+        "team_name": "lighting",
+        "campus": "CTG"
+    }
+},
+{
+    "model": "checklist.team",
+    "pk": 2,
+    "fields": {
+        "team_name": "lighting",
+        "campus": "CTB"
+    }
+},
+{
+    "model": "checklist.team",
+    "pk": 3,
+    "fields": {
+        "team_name": "audio",
+        "campus": "CTG"
+    }
+},
+{
+    "model": "checklist.section",
+    "pk": 1,
+    "fields": {
+        "section_name": "Power On",
+        "page_number": 1,
+        "team": 1,
+        "next_section": null
+    }
+},
+{
+    "model": "checklist.section",
+    "pk": 2,
+    "fields": {
+        "section_name": "Dimmer Check",
+        "page_number": 2,
+        "team": 1,
+        "next_section": null
+    }
+},
+{
+    "model": "checklist.section",
+    "pk": 3,
+    "fields": {
+        "section_name": "Focus Check",
+        "page_number": 3,
+        "team": 1,
+        "next_section": null
+    }
+},
+{
+    "model": "checklist.checklist",
+    "pk": 1,
+    "fields": {
+        "person": "Justin",
+        "date": "2018-06-13",
+        "team": 1
+    }
+}
 ]
-
-
