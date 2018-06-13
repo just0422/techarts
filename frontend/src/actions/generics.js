@@ -23,11 +23,14 @@ export function selectTeam(team){
 //      }
 export function fetchChecklist(values){
     return (dispatch) => {
+        var { person_name, team } = values
+        var url = "/checklist/" + person_name + "/" + team;
+
         dispatch({
             type: consts.FETCH_CHECKLIST,
             payload: values
         })
-        dispatch(push("/checklist"));
+        dispatch(push(url));
     }
 }
 

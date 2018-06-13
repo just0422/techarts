@@ -5,7 +5,8 @@ export default function reducer(
         ready: false,
         teams: [],
         campuses: [],
-        currentCampus: ''
+        currentCampus: '',
+        person_name: ''
     }, action){
     switch(action.type){
         case consts.FETCH_TEAMS_FULFILLED: {
@@ -22,6 +23,14 @@ export default function reducer(
             return {
                 ...state,
                 currentCampus: currentCampus
+            }
+        }
+        case consts.SET_PERSON_NAME:
+        case consts.FETCH_CHECKLIST: {
+            const { person_name } = action.payload;
+            return {
+                ...state,
+                person_name: person_name
             }
         }
         default: {

@@ -22,9 +22,9 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
-    fetchChecklist: (values) => dispatch(fetchChecklist(values))
+    fetchChecklist: (values) => dispatch(fetchChecklist(values)),
     selectTeam: (team) => dispatch(selectTeam(team)),
-    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
+    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams))
 });
 
 class Index extends Component {

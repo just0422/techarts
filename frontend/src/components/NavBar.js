@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavDropdown, MenuItem } from "react-bootstrap";
 
-import { fetchTeams, selectTeam } from "../actions/generics";
+import { fetchTeams, fetchChecklist, selectTeam } from "../actions/generics";
 import "../stylesheets/navbar.css";
 
 
@@ -17,6 +17,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
+    fetchChecklist: (values) => dispatch(fetchChecklist(values)),
     selectTeam: (teamId) => dispatch(selectTeam(teamId))
 });
 
@@ -24,6 +25,10 @@ const mapDispatchToProps = (dispatch) => ({
 class NavigationBar extends Component {
     handleClick(teamId, event){
         this.props.selectTeam(teamId);
+        this.props.fetchChecklist({
+            team: teamId,
+            person_name: this.props.person_name
+        })
     }
     
     // Get teams from the server
@@ -78,19 +83,22 @@ class NavigationBar extends Component {
             })
 
             return (
-				<Navbar collapseOnSelect>
-					<Navbar.Header>
-					    <Navbar.Brand>
-						  <a href="/">Tech Arts</a>
-						</Navbar.Brand>
-						<Navbar.Toggle />
-					</Navbar.Header>
-					<Navbar.Collapse>
-					    <Nav>
-							{campusTeams}
-						</Nav>
-					</Navbar.Collapse>
-				</Navbar>
+                <div>
+                    <Navbar collapseOnSelect>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                              <a href="/">Tech Arts</a>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                        </Navbar.Header>
+                        <Navbar.Collapse>
+                            <Nav>
+                                {campusTeams}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    { this.props.children }
+                </div>
             )
         }
         else return <h5>Loading</h5>
