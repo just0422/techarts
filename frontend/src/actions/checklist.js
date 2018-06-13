@@ -20,8 +20,6 @@ export function fetchChecklist(person_name, team){
                         team: team
                     }
                 })
-                console.log("Got Got");
-
             })
     }
 }
