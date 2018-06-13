@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import { routerReducer } from "react-router-redux";
 
 import * as consts from "../constants";
 import checklist from "./checklist";

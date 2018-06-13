@@ -40,31 +40,7 @@ export function selectTeam(team){
 export function submit(values){
     return (dispatch) => {
         dispatch({type: consts.FETCH_CHECKLIST})
-
-        var url = consts.CHECKLIST + values.team + "/" + values.name
-
-        dispatch(push("/checklist"))
-       /* axios.get(url)
-            .then((response) => {
-                const { id, person, date, team } = response.data
-                dispatch({
-                    type: consts.FETCH_CHECKLIST_FULFILLED, 
-                    payload: {
-                        id: id,
-                        person: person,
-                        date: date,
-                        team: team
-                    }
-                })
-               
-               
-
-                // setup routes
-                // dispatch next page
-                // setup errors
-                // setup all 3 action tests
-                // setup loaders
-            })*/
+        dispatch(push("/checklist"));
     }
 }
 

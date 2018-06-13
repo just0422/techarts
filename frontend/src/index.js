@@ -8,7 +8,6 @@ import { Route, Switch } from 'react-router';
 
 import Index from "./components/Index";
 import NavigationBar from "./components/NavBar";
-import Checklist from "./components/Checklist";
 import store, { history } from "./store";
 
 const app = document.getElementById('app');

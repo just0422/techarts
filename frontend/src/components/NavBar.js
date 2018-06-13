@@ -21,6 +21,15 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 class NavigationBar extends Component {
+    constructor(){
+        super();
+
+        this.teamToMenuItem = this.teamToMenuItem
+    }
+
+    teamToMenuItem(team, i, j){
+    }
+
     componentWillMount(){
         if (!this.props.ready)
            this.props.fetchTeams();
@@ -28,23 +37,35 @@ class NavigationBar extends Component {
 
     render(){
         if (this.props.ready){
+            var i, team, eventKey, cTeams;
             var campusTeams = {};
             const { teams, campuses } = this.props;
             
             // Map teams into { campus: [teams] } structure
-            teams.map( function(team){
+            for( i = 0; i < teams.length; i++ ){
+                team = teams[i];
+
                 if (!campusTeams[team.campus])
                     campusTeams[team.campus] = [];
                 campusTeams[team.campus].push(team);
-            })
+            }
             
-            // Convert each team into a <NavItem>
-            for(var i = 0; i < campuses.length; i++){
-                campusTeams[campuses[i]] = 
-                    campusTeams[campuses[i]].map( (team, j) => {
-                        var eventKey = i.toString() + "." + j.toString();
-                        return <MenuItem key={eventKey} eventKey={eventKey} className="navbar-item">{team.team_name}</MenuItem>
-                    })
+            // Convert each team into a <MenuItem>
+            for( i = 0; i < campuses.length; i++ ){
+                // Simplify teams into smaller variable;
+                cTeams = campusTeams[campuses[i]];
+
+                for(var j = 0; i < cTeams.length; j++){
+                    eventKey = i.toString() + "." + j.toString();
+                    team = cTeams[j];
+
+                    cTeams[j] = <MenuItem
+                                    key={eventKey} 
+                                    eventKey={eventKey} 
+                                    className="navbar-item">
+                                        {team.team_name}
+                                </MenuItem>;
+                }
             }
             
             // Convert each campus into a <Dropdown> with <NavItem> teams
