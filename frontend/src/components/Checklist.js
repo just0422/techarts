@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
+import ReactSwipe from 'react-swipe';
 
 import NavigationBar from "./NavBar";
 import { fetchChecklist, fetchSections } from "../actions/checklist";
+import "../stylesheets/checklist.css";
 
 const mapStateToProps = (store) => {
     return {
@@ -41,19 +43,21 @@ class Checklist extends Component {
         if (this.props.sectionsReady){
            sections = 
                 this.props.sections.map( (section) => { 
-                    return (<h1 key={section.id}>{section.section_name}</h1>);
+                    return (<div key={section.id} className="item"><h1>{section.section_name}</h1></div>);
                 })
             
-        }
 
         return (
             <div>
                 <NavigationBar />
-                <h1>{this.props.person}</h1>
-                { sections }
+                <ReactSwipe ref={reactSwipe => this.reactSwipe = reactSwipe} swipeOptions={{continuous:false}}>
+                    { sections }
+                </ReactSwipe>
             </div>
         );
+        }
     }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Checklist));
+        }
