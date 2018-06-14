@@ -58,7 +58,8 @@ class Checklist extends Component {
                             questions.push(this.props.questions[i])
 
                     return (<Section 
-                                section={section}
+                                id={section.id}
+								section_name={section.section_name}
                                 questions={questions}
                                 key={section.id} /> )
                 })
