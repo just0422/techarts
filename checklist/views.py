@@ -37,7 +37,13 @@ class SectionView(generics.ListAPIView):
     serializer_class=SectionSerializer
 
     def get_queryset(self):
-        return Section.objects.filter(team = Team.objects.get(id=self.kwargs.get('team')))
+        return Section.objects.filter(team=Team.objects.get(id=self.kwargs.get('team'))).order_by('page_number')
+
+class QuestionView(generics.ListAPIView):
+    serializer_class=QuestionSerializer
+    
+    def get_queryset(self):
+        return Question.objects.filter(team=Team.objects.get(id=self.kwargs.get('team'))).order_by('section', 'question_number')
 
 # Return all questions (with team)
 

@@ -8,8 +8,10 @@ export default function reducer(
         person: '',
         loading: false,
         sections: [],
+        questions: [],
         checklistReady: false,
-        sectionsReady: false
+        sectionsReady: false,
+        questionsReady: false
     }, action){
     switch(action.type){
         case consts.FETCH_CHECKLIST: {
@@ -42,6 +44,21 @@ export default function reducer(
                 ...state,
                 sections: sections,
                 sectionsReady: true
+            }
+        }
+        case consts.FETCH_QUESTIONS: {
+            return {
+                ...state,
+                questionsReady: false,
+                loading: true
+            }
+        }
+        case consts.FETCH_QUESTIONS_FULFILLED: {
+            const { questions } = action.payload;
+            return {
+                ...state,
+                questions: questions,
+                questionsReady: true
             }
         }
         default:

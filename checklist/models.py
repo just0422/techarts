@@ -12,15 +12,8 @@ class Team(models.Model):
 
 class Section(models.Model):
     section_name = models.CharField(max_length = 200)
-    page_number = models.IntegerField(default = 0)
+    page_number = models.IntegerField(default = -1)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    next_section = models.OneToOneField(
-        'self',
-        on_delete=models.CASCADE,
-        related_name='previous_section',
-        null=True,
-        blank=True
-    )
 
     def team_name(self):
         return self.team.team_name
@@ -33,7 +26,9 @@ class Section(models.Model):
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
+    question_number = models.IntegerField(default=-1)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def team_name(self):
         return self.section.team_name()

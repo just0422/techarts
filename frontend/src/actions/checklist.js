@@ -40,3 +40,20 @@ export function fetchSections(team){
             })
     }
 }
+
+export function fetchQuestions(team){
+    return (dispatch) => {
+        dispatch({ type: consts.FETCH_QUESTIONS })
+
+        var url = "/api/questions/" + team;
+        axios.get(url)
+            .then((response) => {
+                dispatch({
+                    type: consts.FETCH_QUESTIONS_FULFILLED,
+                    payload: {
+                        questions: response.data
+                    }
+                })
+            })
+    }
+}
