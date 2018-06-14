@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ReactSwipe from 'react-swipe';
 
 import NavigationBar from "./NavBar";
+import Section from "./Section";
 import { fetchChecklist, fetchSections, fetchQuestions } from "../actions/checklist";
 import "../stylesheets/checklist.css";
 
@@ -47,19 +48,19 @@ class Checklist extends Component {
     }
 
     render(){
-        var sections = <p>Loading...</p>
-        var questions = <p>Loading...</p>
+        let sections = <p>Loading...</p>
         if (this.props.sectionsReady){
            sections = 
                 this.props.sections.map( (section) => { 
-                    return (<div key={section.id} className="item"><h1>{section.section_name}</h1></div>);
-                })
-        }
+                    let questions = [];
+                    for (let i = 0; i < this.props.questions.length; i++)
+                        if (this.props.questions[i].section === section.id)
+                            questions.push(this.props.questions[i])
 
-        if (this.props.questionsReady){
-           questions = 
-                this.props.questions.map( (question) => { 
-                    return (<div key={question.id} className="item"><h1>{question.question_text}</h1></div>);
+                    return (<Section 
+                                section={section}
+                                questions={questions}
+                                key={section.id} /> )
                 })
         }
 
@@ -68,7 +69,6 @@ class Checklist extends Component {
                 <NavigationBar />
                 <ReactSwipe ref={reactSwipe => this.reactSwipe = reactSwipe} swipeOptions={{continuous:false}}>
                     { sections }
-                    {questions }
                 </ReactSwipe>
             </div>
         );
