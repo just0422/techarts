@@ -21,12 +21,14 @@ export default class Question extends Component {
         console.log("Once?");
 
         if (this.state.checked){
+            this.props.sectionCheck(false);
             this.setState({ 
                 checked : false,
                 checkedColor: "incomplete"
             })
         }
         else{
+            this.props.sectionCheck(true);
             this.setState({ 
                 checked : true,
                 checkedColor: "complete"

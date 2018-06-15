@@ -3,7 +3,6 @@
     font-size: 20px;
     margin: 10px;
     box-shadow: 0 1px #EBEBEB;
-    background: #ffe8e8;
     border-radius: 5px;
     border: 1px solid;
     border-color: #E5E5E5 #D3D3D3 #B9C1C6;
@@ -13,11 +12,9 @@
     text-align:center;
 }
 
-.question {
-    margin: 10px;
-    background-color: #FF8080;
-    color: white;
-    box-shadow: 0px 0px 4px black;
-    padding: 5px 10px 10px 10px;
+.section-incomplete{
+    background: #ffe8e8;
 }
-
+.section-complete{
+    background: #e8ffe8;
+}
