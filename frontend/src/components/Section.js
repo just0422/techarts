@@ -12,8 +12,9 @@ export default class Section extends Component {
                 </div>
                 <div className="section-question">
 					{ 
-                        this.props.questions.map( (question, i) => {
+                        this.props.questions.map( (question) => {
                             return (<Question
+                                        key={question.id}
                                         question_text={question.question_text} />
                             )
                         })
