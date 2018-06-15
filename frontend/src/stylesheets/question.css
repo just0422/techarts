@@ -1,3 +1,17 @@
+.question {
+    margin: 10px;
+    box-shadow: 0px 0px 4px black;
+    padding: 5px 10px 10px 10px;
+}
+.question-incomplete {
+    color: white;
+    background-color: #FF8080;
+}
+.question-complete {
+    color: black;
+    background-color: #80FF80;
+}
+
 
 
 .control {
@@ -23,9 +37,6 @@
     width: 20px;
     background: #e6e6e6;
     border: 0px solid #000000;
-}
-.control-radio .control_indicator {
-    border-radius: undefined%;
 }
 
 .control:hover input ~ .control_indicator,
