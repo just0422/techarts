@@ -19,7 +19,8 @@ class ChecklistView(generics.RetrieveAPIView):
     def get_queryset(self):
         return Checklist.objects.filter(
             person = self.kwargs.get('name'),
-            team = Team.objects.get(id=self.kwargs.get('team'))
+            team = Team.objects.get(id=self.kwargs.get('team')),
+            date = datetime.datetime.today()
         )
 
     def get_object(self):
