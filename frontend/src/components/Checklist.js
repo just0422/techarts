@@ -16,7 +16,6 @@ const mapStateToProps = (store) => {
         person: store.checklist.person,
         loading: store.checklist.loading,
         sections: store.checklist.sections,
-        questions: store.checklist.questions,
         checklistReady: store.checklist.checklistReady,
         sectionsReady: store.checklist.sectionsReady,
         questionsReady: store.checklist.questionsReady
@@ -40,10 +39,12 @@ class Checklist extends Component {
         if (this.props.sectionsReady){
            sections = 
                 this.props.sections.map( (section) => { 
+                    console.log(section.questions)
                     return (<Section 
                                 key={section.id} 
                                 id={section.id}
 								section_name={section.section_name}
+                                questions={section.questions}
                                 toggleQuestion={this.props.toggleQuestion}
                                 />
                             )

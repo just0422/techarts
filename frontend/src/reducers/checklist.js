@@ -8,7 +8,6 @@ export default function reducer(
         person: '',
         loading: false,
         sections: [],
-        questions: {},
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false
@@ -51,19 +50,6 @@ export default function reducer(
                 ...state,
                 questionsReady: false,
                 loading: true
-            }
-        }
-        case consts.FETCH_QUESTIONS_FULFILLED: {
-            let questions = {};
-            let pQuestions = action.payload.questions;
-            for(let i = 0; i < pQuestions.length; i++){
-                questions[pQuestions[i].id] = pQuestions[i];
-            }
-
-            return {
-                ...state,
-                questions: questions,
-                questionsReady: true
             }
         }
         case consts.FETCH_CHECKLIST_ITEM_FULFILLED: {
