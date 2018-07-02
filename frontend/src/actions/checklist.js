@@ -65,8 +65,17 @@ export function loadData(person_name, team){
                     });
                 }
             })
-
         }))
     }
 }
 
+export function toggleQuestion(question){
+    return (dispatch) => {
+        dispatch({
+            type: consts.TOGGLE_QUESTION,
+            payload: {
+                question: question
+            }
+        })
+    }
+}

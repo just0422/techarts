@@ -5,7 +5,7 @@ import ReactSwipe from 'react-swipe';
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
-import { loadData } from "../actions/checklist";
+import { loadData, toggleQuestion } from "../actions/checklist";
 import "../stylesheets/checklist.css";
 
 const mapStateToProps = (store) => {
@@ -24,7 +24,8 @@ const mapStateToProps = (store) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadData: (person, team) => dispatch(loadData(person, team))
+    loadData: (person, team) => dispatch(loadData(person, team)),
+    toggleQuestion: (question) => dispatch(toggleQuestion(question))
 });
 
 class Checklist extends Component {
@@ -45,10 +46,11 @@ class Checklist extends Component {
                             questions.push(this.props.questions[id])
 
                     return (<Section 
+                                key={section.id} 
                                 id={section.id}
 								section_name={section.section_name}
                                 questions={questions}
-                                key={section.id} 
+                                toggleQuestion={this.props.toggleQuestion}
                                 />
                             )
                 })

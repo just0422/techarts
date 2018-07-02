@@ -74,11 +74,24 @@ export default function reducer(
                     ...state.questions,
                     [question]:{
                         ...state.questions[question],
-                        checklistItems:{
-                            ...state.questions[question].checklistItems,
-                            id: id,
-                            checked: checked
-                        }
+                        checked: checked,
+                        checklistItemId: id,
+                        color: checked ? "complete" : "incomplete"
+                    }
+                }
+            }
+        }
+        case consts.TOGGLE_QUESTION: {
+            let question = action.payload.question;
+            let checked = !state.questions[question].checked
+            return {
+                ...state,
+                questions:{
+                    ...state.questions,
+                    [question]:{
+                        ...state.questions[question],
+                        checked: checked,
+                        color: checked ? "complete" : "incomplete"
                     }
                 }
             }
