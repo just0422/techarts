@@ -67,18 +67,32 @@ export default function reducer(
             }
         }
         case consts.FETCH_CHECKLIST_ITEM_FULFILLED: {
-            let { question, id, checked } = action.payload;
+            let { sectionId, questionId, id, checked } = action.payload;
+
+            let sections = state.sections;
+            let section = state.sections[sectionId];
+            let questions = state.sections[sectionId].questions;
+            let question = state.sections[sectionId].questions[questionId];
+
+            question = {
+                ...question,
+                checked: checked,
+                checklistItemId: id,
+                color: checked ? "complete" : "incomplete"
+            }
+
+            questions[questionId] = question;
+
+            section = {
+                ...section,
+                questions: questions
+            }
+
+            sections[sectionId] = section
+                
             return {
                 ...state,
-                questions:{
-                    ...state.questions,
-                    [question]:{
-                        ...state.questions[question],
-                        checked: checked,
-                        checklistItemId: id,
-                        color: checked ? "complete" : "incomplete"
-                    }
-                }
+                sections: sections
             }
         }
         case consts.TOGGLE_QUESTION: {

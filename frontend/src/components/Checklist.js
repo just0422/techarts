@@ -36,34 +36,35 @@ class Checklist extends Component {
     }
 
     render(){
-        let sections = <p>Loading...</p>
+        let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
            sections = 
                 this.props.sections.map( (section) => { 
-                    let questions = [];
-                    for (let id in this.props.questions)
-                        if (this.props.questions[id].section === section.id)
-                            questions.push(this.props.questions[id])
-
                     return (<Section 
                                 key={section.id} 
                                 id={section.id}
 								section_name={section.section_name}
-                                questions={questions}
                                 toggleQuestion={this.props.toggleQuestion}
                                 />
                             )
                 })
-        }
 
-        return (
-            <div>
-                <NavigationBar />
-                <ReactSwipe ref={reactSwipe => this.reactSwipe = reactSwipe} swipeOptions={{continuous:false}}>
-                    { sections }
-                </ReactSwipe>
-            </div>
-        );
+            return (
+                <div>
+                    <NavigationBar />
+                    <ReactSwipe swipeOptions={{continuous:false}}>
+                        {sections}
+                    </ReactSwipe>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <NavigationBar />
+                    {sections}
+                </div>
+            )
+        }
     }
 }
 

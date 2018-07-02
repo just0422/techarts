@@ -36,21 +36,6 @@ export default class Section extends Component {
                     <h2>{this.props.section_name}</h2>
                 </div>
                 <div className="section-question">
-					{ 
-                        this.props.questions.map( (question) => {
-                            return (<Question
-                                        key={question.id}
-                                        id={question.id}
-                                        color={question.color}
-                                        checked={question.checked}
-                                        question_text={question.question_text}
-                                        sectionCheck={this.sectionCheck}
-                                        checklistItemId={question.checklistId}
-                                        toggleQuestion={this.props.toggleQuestion}
-                                        />
-                            )
-                        })
-                    }
                 </div>
             </div>
         )
