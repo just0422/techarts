@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
     startChecklist: (values) => dispatch(startChecklist(values)),
     selectTeam: (team) => dispatch(selectTeam(team)),
-    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams))
+    selectCampus: (campus, teams) => dispatch(selectCampus(campus, teams)),
 });
 
 class Index extends Component {

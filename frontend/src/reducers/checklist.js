@@ -8,7 +8,7 @@ export default function reducer(
         person: '',
         loading: false,
         sections: [],
-        questions: [],
+        questions: {},
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false
@@ -54,7 +54,14 @@ export default function reducer(
             }
         }
         case consts.FETCH_QUESTIONS_FULFILLED: {
-            const { questions } = action.payload;
+            let questions = {};
+            let pQuestions = action.payload.questions;
+            for(let i = 0; i < pQuestions.length; i++){
+                questions[pQuestions[i].id] = pQuestions[i];
+            }
+
+            console.log(questions);
+
             return {
                 ...state,
                 questions: questions,
@@ -65,3 +72,5 @@ export default function reducer(
             return state
     }
 }
+
+

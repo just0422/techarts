@@ -5,7 +5,7 @@ import ReactSwipe from 'react-swipe';
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
-import { fetchChecklist, fetchSections, fetchQuestions } from "../actions/checklist";
+import { loadData } from "../actions/checklist";
 import "../stylesheets/checklist.css";
 
 const mapStateToProps = (store) => {
@@ -24,27 +24,14 @@ const mapStateToProps = (store) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchChecklist: (person, team) => dispatch(fetchChecklist(person, team)),
-    fetchSections: (team) => dispatch(fetchSections(team)),
-    fetchQuestions: (team) => dispatch(fetchQuestions(team))
+    loadData: (person, team) => dispatch(loadData(person, team))
 });
 
 class Checklist extends Component {
     componentWillMount(){
-        let { team } = this.props.match.params;
+        let { person_name, team } = this.props.match.params;
 
-        if (!this.props.checklistReady){
-            let { person_name } = this.props.match.params;
-            this.props.fetchChecklist(person_name, team);
-        }
-
-        if (!this.props.sectionsReady){
-            this.props.fetchSections(team);
-        }
-
-        if (!this.props.questionReady){
-            this.props.fetchQuestions(team);
-        }
+        this.props.loadData(person_name, team);
     }
 
     render(){
@@ -53,15 +40,17 @@ class Checklist extends Component {
            sections = 
                 this.props.sections.map( (section) => { 
                     let questions = [];
-                    for (let i = 0; i < this.props.questions.length; i++)
-                        if (this.props.questions[i].section === section.id)
-                            questions.push(this.props.questions[i])
+                    for (let id in this.props.questions)
+                        if (this.props.questions[id].section === section.id)
+                            questions.push(this.props.questions[id])
 
                     return (<Section 
                                 id={section.id}
 								section_name={section.section_name}
                                 questions={questions}
-                                key={section.id} /> )
+                                key={section.id} 
+                                />
+                            )
                 })
         }
 

@@ -21,7 +21,7 @@ export default class Section extends Component {
             checkedItems++;
         
         this.setState({checkedItems: checkedItems})
-        if (checkedItems == this.props.questions.length)
+        if (checkedItems === this.props.questions.length)
             this.setState({complete: "complete"});
     }
 
@@ -37,8 +37,11 @@ export default class Section extends Component {
                         this.props.questions.map( (question) => {
                             return (<Question
                                         key={question.id}
+                                        id={question.id}
                                         question_text={question.question_text}
-                                        sectionCheck={this.sectionCheck}/>
+                                        sectionCheck={this.sectionCheck}
+                                        checklistItemId={question.checklistId}
+                                        />
                             )
                         })
                     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import "../stylesheets/question.css"
+import "../stylesheets/question.css";
 
 export default class Question extends Component {
     constructor(){
@@ -16,24 +16,13 @@ export default class Question extends Component {
     }
 
     handleCheck(event){
-        event.stopPropagation(); // Should stop bubble slicks
-        event.nativeEvent.stopImmediatePropagation();
-        console.log("Once?");
+        let checked = !this.state.checked;
+        let checkedColor = checked ? "complete" : "incomplete";
 
-        if (this.state.checked){
-            this.props.sectionCheck(false);
-            this.setState({ 
-                checked : false,
-                checkedColor: "incomplete"
-            })
-        }
-        else{
-            this.props.sectionCheck(true);
-            this.setState({ 
-                checked : true,
-                checkedColor: "complete"
-            })
-        }
+        this.setState({ 
+            checked : checked,
+            checkedColor: checkedColor
+        })
     }
 
     stopPropogation(event){
