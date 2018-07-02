@@ -2,18 +2,6 @@ import axios from "axios";
 
 import * as consts from "../constants"
 
-// Either create a new checklist item or 
-function initQuestion(questionId, checklistId){
-    var url = "/api/checklist_item/" + checklistId + "/" + questionId;
-    axios.get(url)
-        .then((response) => {
-            return {
-                checklistItemId: response.data.id,
-                checked: response.data.checked
-            }
-        })
-}
-
 export function loadData(person_name, team){
     return (dispatch) => {
         dispatch({ type: consts.FETCH_CHECKLIST });
@@ -29,6 +17,7 @@ export function loadData(person_name, team){
         .then(axios.spread( (checklist_response, sections_response, questions_response) => {
             // Manage checklist response
             const { id, person, date, team } = checklist_response.data
+            const checklistId = id;
             dispatch({
                 type: consts.FETCH_CHECKLIST_FULFILLED, 
                 payload: {
@@ -48,19 +37,34 @@ export function loadData(person_name, team){
             })
 
             // Manage question response
-            let questions = questions_response.data;
-            for (let i = 0; i < questions.length; i++){
-                let { checklistItemId, checked } = initQuestion(questions[i].id, id);
-
-                questions[i].checklistItemId = checklistItemId;
-                questions[i].checked = checked;
-            }
             dispatch({
                 type: consts.FETCH_QUESTIONS_FULFILLED,
                 payload: {
-                    questions: questions
+                    questions: questions_response.data
                 }
             })
+
+            let checklistItemPromises = [];
+            let questions = questions_response.data;
+            for (let i = 0; i < questions.length; i++){
+                let url = "/api/checklist_item/" + checklistId + "/" + questions[i].id;
+                checklistItemPromises.push(axios.get(url)) 
+            }
+
+            axios.all(checklistItemPromises).then( (responses) => {
+                for(let i = 0; i < responses.length; i++){
+                    let response = responses[i];
+
+                    dispatch({
+                        type: consts.FETCH_CHECKLIST_ITEM_FULFILLED,
+                        payload: {
+                            id: response.data.id,
+                            checked: response.data.checked
+                        }
+                    });
+                }
+            })
+
         }))
     }
 }

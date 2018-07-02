@@ -9,6 +9,7 @@ export default function reducer(
         loading: false,
         sections: [],
         questions: {},
+        checklistItems: {},
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false
@@ -60,12 +61,20 @@ export default function reducer(
                 questions[pQuestions[i].id] = pQuestions[i];
             }
 
-            console.log(questions);
-
             return {
                 ...state,
                 questions: questions,
                 questionsReady: true
+            }
+        }
+        case consts.FETCH_CHECKLIST_ITEM_FULFILLED: {
+            let { id, checked } = action.payload;
+            return {
+                ...state,
+                checklistItems:{
+                    ...state.checklistItems,
+                    [id]: checked
+                }
             }
         }
         default:
