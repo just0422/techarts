@@ -59,7 +59,8 @@ export function loadData(person_name, team){
                         type: consts.FETCH_CHECKLIST_ITEM_FULFILLED,
                         payload: {
                             id: response.data.id,
-                            checked: response.data.checked
+                            checked: response.data.checked,
+                            question: response.data.question
                         }
                     });
                 }

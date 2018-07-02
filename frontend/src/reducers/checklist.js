@@ -9,7 +9,6 @@ export default function reducer(
         loading: false,
         sections: [],
         questions: {},
-        checklistItems: {},
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false
@@ -68,12 +67,19 @@ export default function reducer(
             }
         }
         case consts.FETCH_CHECKLIST_ITEM_FULFILLED: {
-            let { id, checked } = action.payload;
+            let { question, id, checked } = action.payload;
             return {
                 ...state,
-                checklistItems:{
-                    ...state.checklistItems,
-                    [id]: checked
+                questions:{
+                    ...state.questions,
+                    [question]:{
+                        ...state.questions[question],
+                        checklistItems:{
+                            ...state.questions[question].checklistItems,
+                            id: id,
+                            checked: checked
+                        }
+                    }
                 }
             }
         }
