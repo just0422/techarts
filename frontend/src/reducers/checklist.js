@@ -7,7 +7,7 @@ export default function reducer(
         team: '',
         person: '',
         loading: false,
-        sections: [],
+        sections: {},
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false
@@ -82,18 +82,31 @@ export default function reducer(
             }
         }
         case consts.TOGGLE_QUESTION: {
-            let question = action.payload.question;
-            let checked = !state.questions[question].checked
+            let { sectionId, questionId } = action.payload;
+            let sections = state.sections;
+            let section = state.sections[sectionId];
+            let questions = state.sections[sectionId].questions;
+            let question = state.sections[sectionId].questions[questionId];
+
+            let checked = !question.checked;
+
+            question = {
+                ...question,
+                checked: checked,
+                color: checked ? "complete" : "incomplete"
+            }
+            questions[questionId] = question;
+
+            section = {
+                ...section,
+                questions: questions
+            }
+
+            sections[sectionId] = section
+
             return {
                 ...state,
-                questions:{
-                    ...state.questions,
-                    [question]:{
-                        ...state.questions[question],
-                        checked: checked,
-                        color: checked ? "complete" : "incomplete"
-                    }
-                }
+                sections: sections
             }
         }
         default:

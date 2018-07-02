@@ -29,15 +29,17 @@ export function loadData(person_name, team){
             })
             
             // Manage sections response
-            let sections = [];
+            let sections = {};
             for (var i = 0; i < sections_response.data.length; i++){
-                sections.push(sections_response.data[i]);
-                sections[i].questions = {}
+                let section = sections_response.data[i];
+                let sectionId = section.id;
+                sections[sectionId] = section
+                sections[sectionId].questions = {}
 
                 for(let j = 0; j < questions_response.data.length; j++){
                     let question = questions_response.data[j];
-                    if (question.section === sections[i].id){
-                        sections[i].questions[question.id] = question
+                    if (question.section === sections[sectionId].id){
+                        sections[sectionId].questions[question.id] = question
                     }
                 }
 
@@ -61,9 +63,9 @@ export function loadData(person_name, team){
                     let response = responses[i];
                     
                     let section = -1;
-                    for (let j = 0; j < sections.length; j++)
-                        if (response.data.question in sections[j].questions)
-                            section = j;
+                    for (let sectionId in sections) 
+                        if (response.data.question in sections[sectionId].questions)
+                            section = sectionId;
 
                     dispatch({
                         type: consts.FETCH_CHECKLIST_ITEM_FULFILLED,
@@ -80,12 +82,15 @@ export function loadData(person_name, team){
     }
 }
 
-export function toggleQuestion(question){
+export function toggleQuestion(section, question){
     return (dispatch) => {
+            console.log(section)
+            console.log(question)
         dispatch({
             type: consts.TOGGLE_QUESTION,
             payload: {
-                question: question
+                sectionId: section,
+                questionId: question
             }
         })
     }

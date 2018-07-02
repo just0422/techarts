@@ -24,7 +24,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (person, team) => dispatch(loadData(person, team)),
-    toggleQuestion: (question) => dispatch(toggleQuestion(question))
+    toggleQuestion: (section, question) => dispatch(toggleQuestion(section, question))
 });
 
 class Checklist extends Component {
@@ -38,8 +38,8 @@ class Checklist extends Component {
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
            sections = 
-                this.props.sections.map( (section) => { 
-                    console.log(section.questions)
+                Object.keys(this.props.sections).map( (sectionId) => { 
+                    let section = this.props.sections[sectionId];
                     return (<Section 
                                 key={section.id} 
                                 id={section.id}
