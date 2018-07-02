@@ -21,7 +21,7 @@ class ChecklistView(generics.RetrieveAPIView):
             person = self.kwargs.get('name'),
             team = Team.objects.get(id=self.kwargs.get('team')),
             date = datetime.datetime.today()
-        )
+            )[:1]
 
     def get_object(self):
         if len(self.get_queryset()) == 0:
