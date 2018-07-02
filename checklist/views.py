@@ -46,6 +46,25 @@ class QuestionView(generics.ListAPIView):
     def get_queryset(self):
         return Question.objects.filter(team=Team.objects.get(id=self.kwargs.get('team'))).order_by('section', 'question_number')
 
+class ChecklistItemView(generics.RetrieveUpdateAPIView):
+    serializer_class=ChecklistItemSerializer
+
+    def get_queryset(self):
+        return ChecklistItem.objects.filter(
+            checklist = Checklist.objects.get(id=self.kwargs.get('checklist')),
+            question = Question.objects.get(id=self.kwargs.get('question'))
+            )[:1]
+
+    def get_object(self):
+        if len(self.get_queryset()) == 0:
+            ChecklistItem.objects.create(
+                checklist = Checklist.objects.get(id=self.kwargs.get('checklist')),
+                question = Question.objects.get(id=self.kwargs.get('question'))
+            )
+
+        queryset = self.get_queryset()
+        return get_object_or_404(queryset)
+
 # Return all questions (with team)
 
 # View
