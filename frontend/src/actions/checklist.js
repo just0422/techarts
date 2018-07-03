@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import * as consts from "../constants"
+import * as consts from "../constants";
 
 export function loadData(person_name, team){
     return (dispatch) => {

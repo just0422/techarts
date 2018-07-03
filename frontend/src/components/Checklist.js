@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import ReactSwipe from 'react-swipe';
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
@@ -35,6 +34,7 @@ class Checklist extends Component {
     }
 
     render(){
+        console.log("Rendered");
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
            sections = 
@@ -50,22 +50,13 @@ class Checklist extends Component {
                             )
                 })
 
-            return (
-                <div>
-                    <NavigationBar />
-                    <ReactSwipe swipeOptions={{continuous:false}}>
-                        {sections}
-                    </ReactSwipe>
-                </div>
-            );
-        } else {
+        }
             return (
                 <div>
                     <NavigationBar />
                     {sections}
                 </div>
-            )
-        }
+            );
     }
 }
 

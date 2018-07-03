@@ -51,7 +51,7 @@ export default class Section extends Component {
                                         checked={question.checked}
                                         question_text={question.question_text}
                                         sectionCheck={this.sectionCheck}
-                                        checklistItemId={question.checklistId}
+                                        checklistItemId={question.checklistItemId}
                                         toggleQuestion={this.toggleQuestion}
                                         />
                             )

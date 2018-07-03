@@ -20,8 +20,11 @@ export default class Question extends Component {
     }
 
     render(){
+        let color = "incomplete";
+        if (this.props.color)
+            color = this.props.color;
         return (
-            <div className={['question', 'question-'+this.props.color].join(' ')}>
+            <div className={['question', 'question-' + color].join(' ')}>
                 <label className="control control-checkbox" onClick={this.handleCheck}>
 					{ this.props.question_text }
 					<input type="checkbox" value={this.props.checked} onClick={this.stopPropogation} />

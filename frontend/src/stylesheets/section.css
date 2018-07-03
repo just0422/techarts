@@ -1,11 +1,11 @@
 .section{
     font-weight: bold;
     font-size: 20px;
-    margin: 10px;
     box-shadow: 0 1px #EBEBEB;
     border-radius: 5px;
     border: 1px solid;
     border-color: #E5E5E5 #D3D3D3 #B9C1C6;
+    margin: 10px 0;
 }
 
 .section-title{
