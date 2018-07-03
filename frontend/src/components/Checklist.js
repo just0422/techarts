@@ -34,7 +34,6 @@ class Checklist extends Component {
     }
 
     render(){
-        console.log("Rendered");
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
            sections = 
@@ -47,7 +46,7 @@ class Checklist extends Component {
                                 questions={section.questions}
                                 toggleQuestion={this.props.toggleQuestion}
                                 />
-                            )
+                           )
                 })
 
         }

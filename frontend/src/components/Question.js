@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Checkbox } from 'react';
 
 import "../stylesheets/question.css";
 
@@ -16,6 +16,7 @@ export default class Question extends Component {
     }
 
     stopPropogation(event){
+        console.log("STOPPING");
         event.stopPropagation(); // Should prevent bubble slicks
     }
 
