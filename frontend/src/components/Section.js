@@ -23,8 +23,9 @@ export default class Section extends Component {
         else 
             checkedItems--;
         
+        console.log(checkedItems);
         this.setState({checkedItems: checkedItems})
-        if (checkedItems === this.props.questions.length)
+        if (checkedItems === Object.keys(this.props.questions).length)
             this.setState({complete: "complete"});
         else
             this.setState({complete: "incomplete"});

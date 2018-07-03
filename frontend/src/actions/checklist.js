@@ -84,8 +84,6 @@ export function loadData(person_name, team){
 
 export function toggleQuestion(section, question){
     return (dispatch) => {
-            console.log(section)
-            console.log(question)
         dispatch({
             type: consts.TOGGLE_QUESTION,
             payload: {
