@@ -30,55 +30,20 @@ export default function reducer(
                 checklistReady: true
             }
         }
-        case consts.FETCH_SECTIONS: {
+        case consts.FETCH_CHECKLIST_ITEMS: {
             return {
                 ...state,
                 sectionsReady: false,
                 loading: true
             }
         }
-        case consts.FETCH_SECTIONS_FULFILLED: {
-            const { sections } = action.payload;
+        case consts.FETCH_CHECKLIST_ITEMS_FULFILLED: {
+            let { sections } = action.payload;
+
             return {
                 ...state,
                 sections: sections,
                 sectionsReady: true
-            }
-        }
-        case consts.FETCH_QUESTIONS: {
-            return {
-                ...state,
-                questionsReady: false,
-                loading: true
-            }
-        }
-        case consts.FETCH_CHECKLIST_ITEM_FULFILLED: {
-            let { sectionId, questionId, id, checked } = action.payload;
-
-            let sections = state.sections;
-            let section = state.sections[sectionId];
-            let questions = state.sections[sectionId].questions;
-            let question = state.sections[sectionId].questions[questionId];
-
-            question = {
-                ...question,
-                checked: checked,
-                checklistItemId: id,
-                color: checked ? "complete" : "incomplete"
-            }
-
-            questions[questionId] = question;
-
-            section = {
-                ...section,
-                questions: questions
-            }
-
-            sections[sectionId] = section
-                
-            return {
-                ...state,
-                sections: sections
             }
         }
         case consts.TOGGLE_QUESTION: {

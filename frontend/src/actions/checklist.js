@@ -5,8 +5,7 @@ import * as consts from "../constants";
 export function loadData(person_name, team){
     return (dispatch) => {
         dispatch({ type: consts.FETCH_CHECKLIST });
-        dispatch({ type: consts.FETCH_SECTIONS })
-        dispatch({ type: consts.FETCH_QUESTIONS })
+        dispatch({ type: consts.FETCH_CHECKLIST_ITEMS });
         
         // Query all initial data for app
         axios.all([
@@ -44,12 +43,6 @@ export function loadData(person_name, team){
                 }
 
             }
-            dispatch({
-                type: consts.FETCH_SECTIONS_FULFILLED,
-                payload: {
-                    sections: sections
-                }
-            })
 
             let checklistItemPromises = [];
             let questions = questions_response.data;
@@ -61,22 +54,27 @@ export function loadData(person_name, team){
             axios.all(checklistItemPromises).then( (responses) => {
                 for(let i = 0; i < responses.length; i++){
                     let response = responses[i];
+                    let question = response.data.question;
+                    let checked = response.data.checked;
+                    let id = response.data.id;
                     
                     let section = -1;
-                    for (let sectionId in sections) 
+                    for (let sectionId in sections) {
                         if (response.data.question in sections[sectionId].questions)
                             section = sectionId;
+                    }
 
-                    dispatch({
-                        type: consts.FETCH_CHECKLIST_ITEM_FULFILLED,
-                        payload: {
-                            id: response.data.id,
-                            checked: response.data.checked,
-                            questionId: response.data.question,
-                            sectionId: section
-                        }
-                    });
+                    sections[section].questions[question].checked = checked;
+                    sections[section].questions[question].color = checked ? "complete" : "incomplete";
+                    sections[section].questions[question].checklistItemId = id;
                 }
+
+                dispatch({
+                    type: consts.FETCH_CHECKLIST_ITEMS_FULFILLED,
+                    payload: {
+                        sections: sections
+                    }
+                });
             })
         }))
     }

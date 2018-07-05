@@ -44,6 +44,7 @@ class Checklist extends Component {
     }
 
     render(){
+        console.log("rendering");
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
            sections = 
