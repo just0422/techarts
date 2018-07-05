@@ -23,14 +23,24 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (person, team) => dispatch(loadData(person, team)),
-    toggleQuestion: (section, question) => dispatch(toggleQuestion(section, question))
+    toggleQuestion: (checklistId, section, question, checked) => dispatch(toggleQuestion(checklistId, section, question, checked))
 });
 
 class Checklist extends Component {
+    constructor(){
+        super();
+        
+        this.toggleQuestion = this.toggleQuestion.bind(this);
+    }
+
     componentWillMount(){
         let { person_name, team } = this.props.match.params;
 
         this.props.loadData(person_name, team);
+    }
+
+    toggleQuestion(section, question, checked){
+        this.props.toggleQuestion(this.props.id, section, question, checked);
     }
 
     render(){
@@ -44,7 +54,7 @@ class Checklist extends Component {
                                 id={section.id}
 								section_name={section.section_name}
                                 questions={section.questions}
-                                toggleQuestion={this.props.toggleQuestion}
+                                toggleQuestion={this.toggleQuestion}
                                 />
                            )
                 })

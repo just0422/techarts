@@ -1,6 +1,9 @@
 // URLS
 export const TEAMS = "/api/teams/"
 export const CHECKLIST = "/api/checklist/"
+export const SECTIONS = "/api/sections/"
+export const QUESTIONS = "/api/questions/"
+export const CHECKLIST_ITEM = "/api/checklist_item/"
 
 // Generic
 export const SELECT_TEAM = "SELECT_TEAM"

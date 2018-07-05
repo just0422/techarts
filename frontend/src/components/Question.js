@@ -1,4 +1,4 @@
-import React, { Component, Checkbox } from 'react';
+import React, { Component } from 'react';
 
 import "../stylesheets/question.css";
 
@@ -11,12 +11,10 @@ export default class Question extends Component {
     }
 
     handleCheck(event){
-        this.props.toggleQuestion(this.props.id);
-        this.props.sectionCheck(!this.props.checked);
+        this.props.toggleQuestion(this.props.id, !this.props.checked);
     }
 
     stopPropogation(event){
-        console.log("STOPPING");
         event.stopPropagation(); // Should prevent bubble slicks
     }
 

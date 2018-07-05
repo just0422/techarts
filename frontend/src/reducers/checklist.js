@@ -82,13 +82,12 @@ export default function reducer(
             }
         }
         case consts.TOGGLE_QUESTION: {
-            let { sectionId, questionId } = action.payload;
+            let { sectionId, questionId, checked } = action.payload;
             let sections = state.sections;
             let section = state.sections[sectionId];
             let questions = state.sections[sectionId].questions;
             let question = state.sections[sectionId].questions[questionId];
 
-            let checked = !question.checked;
 
             question = {
                 ...question,

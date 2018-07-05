@@ -10,9 +10,9 @@ export function loadData(person_name, team){
         
         // Query all initial data for app
         axios.all([
-            axios.get("/api/checklist/" + person_name + "/" + team),
-            axios.get("/api/sections/" + team),
-            axios.get("/api/questions/" + team)
+            axios.get(consts.CHECKLIST + person_name + "/" + team),
+            axios.get(consts.SECTIONS + team),
+            axios.get(consts.QUESTIONS + team)
         ])
         .then(axios.spread( (checklist_response, sections_response, questions_response) => {
             // Manage checklist response
@@ -54,7 +54,7 @@ export function loadData(person_name, team){
             let checklistItemPromises = [];
             let questions = questions_response.data;
             for (let i = 0; i < questions.length; i++){
-                let url = "/api/checklist_item/" + checklistId + "/" + questions[i].id;
+                let url = consts.CHECKLIST_ITEM + checklistId + "/" + questions[i].id;
                 checklistItemPromises.push(axios.get(url)) 
             }
 
@@ -82,15 +82,16 @@ export function loadData(person_name, team){
     }
 }
 
-export function toggleQuestion(section, question){
-    console.log(section);
-    console.log(question);
+export function toggleQuestion(checklist, section, question, checked){
+    let url = consts.CHECKLIST_ITEM + checklist + "/" + question + "/";
+    axios.put(url, { checked: checked })
     return (dispatch) => {
         dispatch({
             type: consts.TOGGLE_QUESTION,
             payload: {
                 sectionId: section,
-                questionId: question
+                questionId: question,
+                checked: checked
             }
         })
     }
