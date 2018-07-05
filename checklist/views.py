@@ -64,6 +64,16 @@ class ChecklistItemView(generics.RetrieveUpdateAPIView):
 
         queryset = self.get_queryset()
         return get_object_or_404(queryset)
+    
+    def update(self, *args, **kwargs):
+        checklist_item = self.get_queryset()[0]
+        checklist_item.checked = bool(self.request.data['checked'])
+        checklist_item.save()
+
+        serializer = ChecklistItemSerializer(checklist_item)
+
+        return Response(serializer.data)
+
 
 # Return all questions (with team)
 

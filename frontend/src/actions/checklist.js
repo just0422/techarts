@@ -83,9 +83,9 @@ export function loadData(person_name, team){
 }
 
 export function toggleQuestion(checklist, section, question, checked){
-    let url = consts.CHECKLIST_ITEM + checklist + "/" + question + "/";
-    axios.put(url, { checked: checked })
     return (dispatch) => {
+        let url = consts.CHECKLIST_ITEM + checklist + "/" + question + "/";
+        axios.put(url, { checked: checked })
         dispatch({
             type: consts.TOGGLE_QUESTION,
             payload: {
