@@ -4,17 +4,26 @@ import Question from "./Question";
 import "../stylesheets/section.css";
 
 export default class Section extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.toggleQuestion = this.toggleQuestion.bind(this);
+        
+        let checkedItems = 0;
+        let complete = "incomplete";
+        for(var id in this.props.questions)
+            if (this.props.questions[id].checked)
+                checkedItems++;
+
+        if (checkedItems === Object.keys(this.props.questions).length)
+            complete = "complete";
 
         this.state = {
-            checkedItems: 0,
-            complete: "incomplete"
+            checkedItems: checkedItems,
+            complete: complete
         }
     }
-
+    
     toggleQuestion(question, checked){
         let checkedItems = this.state.checkedItems;
         if (checked)
