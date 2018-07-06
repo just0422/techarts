@@ -23,7 +23,7 @@ export default class Question extends Component {
             <div className={['question', 'question-' + this.props.color].join(' ')}>
                 <label className="control control-checkbox" onClick={this.handleCheck}>
 					{ this.props.question_text }
-					<input type="checkbox" value={this.props.checked} onClick={this.stopPropogation} />
+					<input type="checkbox" defaultChecked={this.props.checked} onClick={this.stopPropogation} />
 					<div className="control_indicator"></div>
 				</label> 
 			</div>
