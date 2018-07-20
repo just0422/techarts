@@ -45,7 +45,7 @@ class ChecklistViewTests(TestCase):
     def test_get_new_checklist(self):
         checklists_old = Checklist.objects.all()
         
-        response = self.client.get(reverse("checklist:checklist", kwargs={'team':"1", 'name':"XYZ"}))
+        response = self.client.get(reverse("checklist:checklist", kwargs={'team':str(self.team.id), 'name':"XYZ"}))
         checklists_new = Checklist.objects.all()
 
         serializer = ChecklistSerializer(Checklist.objects.get(person="XYZ"))
@@ -105,3 +105,43 @@ class QuestionsViewTests(TestCase):
 
         self.assertEqual(len(response.data), 1)
         self.assertEqual(serializer.data, question)
+
+class ChecklistItemViewTests(TestCase):
+    """
+    Setup Checklist Item
+    """
+    @classmethod
+    def setUpTestData(cls):
+        cls.team = Team.objects.create(team_name="A", campus="C")
+        cls.section = Section.objects.create(section_name="1", page_number=1, team=cls.team)
+        cls.question1 = Question.objects.create(question_text="ABC", section=cls.section, team=cls.team)
+        cls.question2 = Question.objects.create(question_text="DEF", section=cls.section, team=cls.team)
+        cls.checklist = Checklist.objects.create(person="GHI", team=cls.team)
+        cls.checklistitem = ChecklistItem.objects.create(checklist=cls.checklist, question=cls.question1)
+    
+    def test_get_new_checklist_item(self):
+        checklist_items_old = ChecklistItem.objects.all()
+
+        response = self.client.get(reverse("checklist:checklist_item", kwargs={'checklist':str(self.checklist.id), 'question':str(self.question2.id)}))
+
+        checklist_items_new = ChecklistItem.objects.all()
+        
+        serializer = ChecklistItemSerializer(ChecklistItem.objects.get(checklist=self.checklist, question=self.question2))
+
+        self.assertNotEqual(checklist_items_old, checklist_items_new)
+        self.assertEqual(serializer.data, response.data)
+    
+    def test_get_existing_checklist_item(self):
+        response = self.client.get(reverse("checklist:checklist_item", kwargs={'checklist':str(self.checklist.id), 'question':str(self.question1.id)}))
+        
+        serializer = ChecklistItemSerializer(self.checklistitem)
+
+        self.assertEqual(serializer.data, response.data)
+
+    def test_update_checklist_item(self):
+        print (self.checklistitem.checked)
+        response = self.client.put(reverse("checklist:checklist_item", kwargs={'checklist':str(self.checklist.id), 'question':str(self.question1.id)}), data={"checked":"true"}, content_type='application/x-www-form-urlencoded')
+        
+        print (self.checklistitem.checked)
+        print (ChecklistItem.objects.get(id=self.checklistitem.id).checked)
+        print (response.data)
