@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col } from "react-bootstrap";
 
 import Question from "./Question";
 import "../stylesheets/section.css";
@@ -42,12 +43,12 @@ export default class Section extends Component {
 
     render(){
         return (
-            <div className={["section", "section-"+this.state.complete].join(' ')} >
+            <Col xs={12} sm={6} md={4} className={["section", "section-"+this.state.complete].join(' ')} >
                 <div className="section-title">
                     <h2>{this.props.section_name}</h2>
                 </div>
                 <div className="section-question">
-					{ 
+                    { 
                         Object.keys(this.props.questions).map( (questionId) => {
                             let question = this.props.questions[questionId];
 
@@ -64,7 +65,7 @@ export default class Section extends Component {
                         })
                     }
                 </div>
-            </div>
+            </Col>
         )
     }
 }

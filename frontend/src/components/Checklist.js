@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
+import { Grid, Row } from "react-bootstrap";
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
@@ -53,18 +54,21 @@ class Checklist extends Component {
                     return (<Section 
                                 key={section.id} 
                                 id={section.id}
-								section_name={section.section_name}
+                                section_name={section.section_name}
                                 questions={section.questions}
                                 toggleQuestion={this.toggleQuestion}
-                                />
-                           )
+                                />)
                 })
 
         }
             return (
                 <div>
                     <NavigationBar />
-                    {sections}
+                    <Grid>
+                        <Row>
+                            {sections}
+                        </Row>
+                    </Grid>
                 </div>
             );
     }
