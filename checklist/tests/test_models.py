@@ -28,14 +28,13 @@ class SectionTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.team = Team(team_name="A", campus="B")
-        cls.section2 = Section(section_name="2", page_number=2, team=cls.team)
-        cls.section1 = Section(section_name="1", page_number=1, team=cls.team, next_section=cls.section2)
+        cls.section = Section(section_name="1", page_number=1, team=cls.team)
 
     """
     Check that the __str__() function is valid
     """
     def test_string(self):
-        section = self.section1
+        section = self.section
         section_name = section.section_name
         page_number = section.page_number
         self.assertEquals(str(section), "Section %d - %s" % (page_number, section_name))
@@ -44,20 +43,10 @@ class SectionTests(TestCase):
     """
     def test_team_name_and_campus(self):
         team = self.team
-        section = self.section1
+        section = self.section
         self.assertEquals(section.team_name(), team.team_name)
         self.assertEquals(section.campus(), team.campus)
     
-    """
-    Check that one-to-one relationship is established
-    """
-    def test_next_and_previous_section(self):
-        section1 = self.section1
-        section2 = self.section2
-
-        self.assertEquals(section1.next_section, section2)
-        self.assertEquals(section2.previous_section, section1)
-
 class QuestionTest(TestCase):
     """
     Setup 2 question, 1 sections and 1 team
@@ -82,6 +71,32 @@ class QuestionTest(TestCase):
         question = self.question
         self.assertEquals(question.team_name(), team.team_name)
         self.assertEquals(question.campus(), team.campus)
+
+class SubQuestionTest(TestCase):
+    """
+    Setup 1 subquestion, 1 question, 1 section and 1 team
+    """
+    @classmethod
+    def setUpTestData(cls):
+        cls.team = Team(team_name="A", campus="B")
+        cls.section = Section(section_name="1", page_number=1, team=cls.team)
+        cls.question = Question(question_text="ABC", section=cls.section)
+        cls.subquestion = SubQuestion(title="DEF", question=cls.question)
+
+    """
+    Check that the __str__() function is valid
+    """
+    def test_string(self):
+        self.assertEquals(str(self.subquestion), self.subquestion.title)
+
+    """
+    Check that team foreign key is properly inserted
+    """
+    def test_team_name_and_campus(self):
+        team = self.team
+        subquestion = self.subquestion
+        self.assertEquals(subquestion.team_name(), team.team_name)
+        self.assertEquals(subquestion.campus(), team.campus)
 
 class ChecklistTest(TestCase):
     """

@@ -37,7 +37,21 @@ class Question(models.Model):
         return self.section.campus()
 
     def __str__(self):
-        return "%s" % (self. question_text)
+        return "%s" % (self.question_text)
+
+class SubQuestion(models.Model):
+    title = models.CharField(max_length=200)
+    category = models.CharField(max_length=200)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s" % (self.title)
+
+    def team_name(self):
+        return self.question.team_name()
+
+    def campus(self):
+        return self.question.campus()
 
 class Checklist(models.Model):
     person = models.CharField(max_length = 200)
