@@ -55,7 +55,7 @@ class QuestionTest(TestCase):
     def setUpTestData(cls):
         cls.team = Team(team_name="A", campus="B")
         cls.section = Section(section_name="1", page_number=1, team=cls.team)
-        cls.question = Question(question_text="ABC", section=cls.section)
+        cls.question = Question(question_text="ABC", section=cls.section, team=cls.team)
 
     """
     Check that the __str__() function is valid
@@ -80,7 +80,7 @@ class SubQuestionTest(TestCase):
     def setUpTestData(cls):
         cls.team = Team(team_name="A", campus="B")
         cls.section = Section(section_name="1", page_number=1, team=cls.team)
-        cls.question = Question(question_text="ABC", section=cls.section)
+        cls.question = Question(question_text="ABC", section=cls.section, team=cls.team)
         cls.subquestion = SubQuestion(title="DEF", question=cls.question)
 
     """

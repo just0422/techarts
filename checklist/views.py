@@ -74,8 +74,3 @@ class ChecklistItemView(generics.RetrieveUpdateAPIView):
 
         return Response(serializer.data)
 
-
-# Return all questions (with team)
-
-# View
-# Create all checklist items

@@ -31,7 +31,7 @@ class Question(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def team_name(self):
-        return self.section.team_name()
+        return self.team.team_name
 
     def campus(self):
         return self.section.campus()
