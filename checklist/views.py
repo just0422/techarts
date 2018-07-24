@@ -38,12 +38,14 @@ class SectionView(generics.ListAPIView):
     serializer_class=SectionSerializer
 
     def get_queryset(self):
-        team_id = self.kwargs.get('team')
-        team = Team.objects.get(id=team_id)
         try:
+            team_id = self.kwargs.get('team')
+            team = Team.objects.get(id=team_id)
             return Section.objects.filter(team=team).order_by('page_number')
         except Section.DoesNotExist:
-            raise execptions.NotFound()
+            raise exceptions.NotFound('Section not found')
+        except Team.DoesNotExist:
+            raise exceptions.NotFound('Team not found')
 
 class QuestionView(generics.ListAPIView):
     serializer_class=QuestionSerializer

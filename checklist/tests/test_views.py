@@ -112,7 +112,7 @@ class SectionViewTests(TestCase):
         response = view(request, **arguments)
         section = response.data[0]
         
-        # Comepare to section created in setup
+        # Compare to section created in setup
         serializer = SectionSerializer(self.section)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(serializer.data, section)
@@ -129,12 +129,9 @@ class SectionViewTests(TestCase):
         # Get section
         request = factory.get(reverse("checklist:sections", kwargs=arguments))
         response = view(request, **arguments)
-        section = response.data[0]
         
-        # Comepare to section created in setup
-        serializer = SectionSerializer(self.section)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(serializer.data, section)
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 class QuestionsViewTests(TestCase):
     """
