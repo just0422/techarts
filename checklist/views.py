@@ -8,7 +8,7 @@ from .serializers import *
 import datetime
 
 # Gather all teams
-class TeamList(generics.ListAPIView):
+class TeamListView(generics.ListAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
