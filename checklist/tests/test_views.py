@@ -117,6 +117,25 @@ class SectionViewTests(TestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(serializer.data, section)
 
+    """
+    Check that a section cannot be retrieved if it doesn't exist
+    """
+    def test_get_section_that_does_not_exist(self):
+        view = SectionView.as_view()
+        arguments = {
+            'team': str(self.team.id + 100)
+        }
+        
+        # Get section
+        request = factory.get(reverse("checklist:sections", kwargs=arguments))
+        response = view(request, **arguments)
+        section = response.data[0]
+        
+        # Comepare to section created in setup
+        serializer = SectionSerializer(self.section)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(serializer.data, section)
+
 class QuestionsViewTests(TestCase):
     """
     Setup Question

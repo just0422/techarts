@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics
+from rest_framework import generics, exceptions
 from rest_framework.response import Response
 
 from .models import *
@@ -38,7 +38,12 @@ class SectionView(generics.ListAPIView):
     serializer_class=SectionSerializer
 
     def get_queryset(self):
-        return Section.objects.filter(team=Team.objects.get(id=self.kwargs.get('team'))).order_by('page_number')
+        team_id = self.kwargs.get('team')
+        team = Team.objects.get(id=team_id)
+        try:
+            return Section.objects.filter(team=team).order_by('page_number')
+        except Section.DoesNotExist:
+            raise execptions.NotFound()
 
 class QuestionView(generics.ListAPIView):
     serializer_class=QuestionSerializer
