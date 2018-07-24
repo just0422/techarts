@@ -120,7 +120,7 @@ class SectionViewTests(TestCase):
     """
     Check that a section cannot be retrieved if it doesn't exist
     """
-    def test_get_section_that_does_not_exist(self):
+    def test_get_section_with_a_team_that_does_not_exist(self):
         view = SectionView.as_view()
         arguments = {
             'team': str(self.team.id + 100)
@@ -147,13 +147,36 @@ class QuestionsViewTests(TestCase):
     Check that a question can be retrieved if it exists
     """
     def test_get_question(self):
-        response = self.client.get(reverse("checklist:questions", kwargs={'team':str(self.team.id)}))
-
-        serializer = QuestionSerializer(self.question)
+        view = QuestionView.as_view()
+        arguments = {
+            'team': str(self.team.id)
+        }
+        
+        # Get question
+        request = factory.get(reverse("checklist:questions", kwargs=arguments))
+        response = view(request, **arguments)
         question = response.data[0]
-
+        
+        # Compare to question created in setup
+        serializer = QuestionSerializer(self.question)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(serializer.data, question)
+
+    """
+    Check that a question cannot be retrieved if it doesn't exist
+    """
+    def test_get_question_with_a_team_that_does_not_exist(self):
+        view = QuestionView.as_view()
+        arguments = {
+            'team': str(self.team.id + 100)
+        }
+        
+        # Get question
+        request = factory.get(reverse("checklist:questions", kwargs=arguments))
+        response = view(request, **arguments)
+        
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 class ChecklistItemViewTests(TestCase):
     """

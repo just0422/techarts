@@ -51,7 +51,14 @@ class QuestionView(generics.ListAPIView):
     serializer_class=QuestionSerializer
     
     def get_queryset(self):
-        return Question.objects.filter(team=Team.objects.get(id=self.kwargs.get('team'))).order_by('section', 'question_number')
+        try:
+            team_id = self.kwargs.get('team')
+            team = Team.objects.get(id=team_id)
+            return Question.objects.filter(team=team).order_by('section', 'question_number')
+        except Question.DoesNotExist:
+            raise exceptions.NotFound('Question not found')
+        except Team.DoesNotExist:
+            raise exceptions.NotFound('Team not found')
 
 class ChecklistItemView(generics.RetrieveUpdateAPIView):
     serializer_class=ChecklistItemSerializer
