@@ -60,6 +60,10 @@ class QuestionView(generics.ListAPIView):
         except Team.DoesNotExist:
             raise exceptions.NotFound('Team not found')
 
+class SubQuestionView(generics.RetrieveAPIView):
+    serializer_class=SubQuestionSerializer
+    queryset=SubQuestion.objects.all()
+
 class ChecklistItemView(generics.RetrieveUpdateAPIView):
     serializer_class=ChecklistItemSerializer
 

@@ -96,13 +96,15 @@ export function toggleQuestion(checklist, section, question, checked, subquestio
         dispatch({
             type: consts.FETCH_SUBQUESTION
         })
-        let sq = const.SUBQUESTION + "/" + subquestion;
+        let sq = consts.SUBQUESTION + "/" + subquestion;
         axios.get(sq)
             .then((response) => {
-                dispatch: costs.FETCH_SUBQUESTION_FULFILLED,
-                payload: {
-                    subquestions: response.data
-                }
+                dispatch({
+                    type:consts.FETCH_SUBQUESTION_FULFILLED,
+                    payload: {
+                        subquestions: response.data
+                    }
+                })
             })
     }
 }

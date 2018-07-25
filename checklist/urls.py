@@ -8,4 +8,5 @@ urlpatterns = [
     path('api/sections/<int:team>/', SectionView.as_view(), name="sections"),
     path('api/questions/<int:team>/', QuestionView.as_view(), name="questions"),
     path('api/checklist_item/<int:checklist>/<int:question>/', ChecklistItemView.as_view(), name="checklist_item"),
+    path('api/subquestion/<int:pk>/', SubQuestionView.as_view(), name="subquation"),
 ]

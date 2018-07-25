@@ -83,7 +83,7 @@ class Fixture(models.Model):
     active = models.BooleanField(default = True)
     working = models.BooleanField(default = True)
     reason = models.TextField(blank=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    subquestion = models.ForeignKey(SubQuestion, related_name='fixtures', on_delete=models.CASCADE)
 
     def __str__(self):
         return "%s - %s" % (str(self.channel), str(self.name))
