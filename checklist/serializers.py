@@ -24,7 +24,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 class SubQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubQuestion
-        fields = ('id', 'title', 'category', 'fixtures')
+        fields = '__all__'
 
 class ChecklistItemSerializer(serializers.ModelSerializer):
     class Meta:

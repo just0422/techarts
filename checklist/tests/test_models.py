@@ -148,11 +148,7 @@ class FixturesTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
-        cls.team = Team(team_name="A", campus="B")
-        cls.section = Section(section_name="1", page_number=1, team=cls.team)
-        cls.question = Question(question_text="ABC", section=cls.section)
-        cls.subquestion = SubQuestion(title="DEF", category="GHI", question=cls.question)
-        cls.fixture = Fixture(campus="A", channel=1, name="B", group="C", active=True, working=True, reason="D", subquestion=cls.subquestion)
+        cls.fixture = Fixture(campus="A", channel=1, name="B", group="C", active=True, working=True, reason="D")
 
     """
     Check that the __str__() function is valid
