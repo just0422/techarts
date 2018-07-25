@@ -25,7 +25,7 @@ export default class Section extends Component {
         }
     }
     
-    toggleQuestion(question, checked){
+    toggleQuestion(question, checked, subquestion){
         let checkedItems = this.state.checkedItems;
         if (checked)
             checkedItems++;
@@ -38,7 +38,7 @@ export default class Section extends Component {
         else
             this.setState({complete: "incomplete"});
 
-        this.props.toggleQuestion(this.props.id, question, checked)
+        this.props.toggleQuestion(this.props.id, question, checked, subquestion)
     }
 
     render(){
@@ -59,6 +59,7 @@ export default class Section extends Component {
                                         checked={question.checked}
                                         question_text={question.question_text}
                                         checklistItemId={question.checklistItemId}
+                                        subquestion={question.subquestion}
                                         toggleQuestion={this.toggleQuestion}
                                         />
                             )

@@ -73,6 +73,9 @@ export default function reducer(
                 sections: sections
             }
         }
+        case consts.FETCH_SUBQUESTION_FULFILLED:{
+            console.log(action.payload);
+        }
         default:
             return state
     }

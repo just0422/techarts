@@ -24,7 +24,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => ({
     loadData: (person, team) => dispatch(loadData(person, team)),
-    toggleQuestion: (checklistId, section, question, checked) => dispatch(toggleQuestion(checklistId, section, question, checked))
+    toggleQuestion: (checklistId, section, question, checked, subquestion) => dispatch(toggleQuestion(checklistId, section, question, checked, subquestion))
 });
 
 class Checklist extends Component {
@@ -40,8 +40,8 @@ class Checklist extends Component {
         this.props.loadData(person_name, team);
     }
 
-    toggleQuestion(section, question, checked){
-        this.props.toggleQuestion(this.props.id, section, question, checked);
+    toggleQuestion(section, question, checked, subquestion){
+        this.props.toggleQuestion(this.props.id, section, question, checked, subquestion);
     }
 
     render(){

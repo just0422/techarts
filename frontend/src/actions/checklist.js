@@ -80,7 +80,7 @@ export function loadData(person_name, team){
     }
 }
 
-export function toggleQuestion(checklist, section, question, checked){
+export function toggleQuestion(checklist, section, question, checked, subquestion){
     return (dispatch) => {
         let url = consts.CHECKLIST_ITEM + checklist + "/" + question + "/";
         axios.put(url, { checked: checked })
@@ -92,5 +92,17 @@ export function toggleQuestion(checklist, section, question, checked){
                 checked: checked
             }
         })
+        
+        dispatch({
+            type: consts.FETCH_SUBQUESTION
+        })
+        let sq = const.SUBQUESTION + "/" + subquestion;
+        axios.get(sq)
+            .then((response) => {
+                dispatch: costs.FETCH_SUBQUESTION_FULFILLED,
+                payload: {
+                    subquestions: response.data
+                }
+            })
     }
 }

@@ -4,6 +4,7 @@ export const CHECKLIST = "/api/checklist/"
 export const SECTIONS = "/api/sections/"
 export const QUESTIONS = "/api/questions/"
 export const CHECKLIST_ITEM = "/api/checklist_item/"
+export const SUBQUESTION = "/api/subquestion/"
 
 // Generic
 export const SELECT_TEAM = "SELECT_TEAM"
@@ -23,3 +24,5 @@ export const SET_PERSON_NAME="SET_PERSON_NAME"
 export const FETCH_CHECKLIST_ITEMS = "FETCH_CHECKLIST_ITEMS"
 export const FETCH_CHECKLIST_ITEMS_FULFILLED = FETCH_CHECKLIST_ITEMS + "_FULFILLED"
 export const TOGGLE_QUESTION = "TOGGLE_QUESTION";
+export const FETCH_SUBQUESTION = "FETCH_SUBQUESTION";
+export const FETCH_SUBQUESTION_FULFILLED = FETCH_SUBQUESTION + "_FULFILLED";

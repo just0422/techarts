@@ -11,7 +11,7 @@ export default class Question extends Component {
     }
 
     handleCheck(event){
-        this.props.toggleQuestion(this.props.id, !this.props.checked);
+        this.props.toggleQuestion(this.props.id, !this.props.checked, this.props.subquestion);
     }
 
     stopPropogation(event){
