@@ -191,7 +191,6 @@ class ChecklistItemViewTests(TestCase):
         cls.question2 = Question.objects.create(question_text="DEF", section=cls.section, team=cls.team)
         cls.checklist = Checklist.objects.create(person="GHI", team=cls.team)
         cls.checklistitem = ChecklistItem.objects.create(checklist=cls.checklist, question=cls.question1)
-        cls.factory = APIRequestFactory()
     
     """
     Check that a checklist item can be created if it doesn't exist
@@ -281,5 +280,51 @@ class ChecklistItemViewTests(TestCase):
         request = factory.put(reverse("checklist:checklist_item", kwargs=arguments), data=params)
         response = view(request, **arguments)
 
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class SubQuestionViewTests(TestCase):
+    """
+    Setup Subquestion Item
+    """
+    @classmethod
+    def setUpTestData(cls):
+        cls.team = Team.objects.create(team_name="A", campus="C")
+        cls.section = Section.objects.create(section_name="1", page_number=1, team=cls.team)
+        cls.question = Question.objects.create(question_text="ABC", section=cls.section, team=cls.team)
+        cls.subquestion = SubQuestion.objects.create(title="DEF", category="GHI", question=cls.question)
+
+    """
+    Check that a subquestion can be retrieved if it exists
+    """
+    def text_get_subquestion(self):
+        view = SubQuestionView.as_view()
+        subquestion_id = self.subquestion.id
+        arguments={
+            'pk': subquestion_id
+        }
+        
+        # Query for subquestion
+        request = factory.get(reverse("checklist:subquestion", kwargs=arguments))
+        response = view(request, **arguments)
+
+        # Verify that the subquestion exists
+        serializer = SubQuestionSerializer(self.subquestion)
+        self.assertEqual(serializer.data, response.data)
+
+    """
+    Check that a subquestion that doesn't exist can't be retrieved
+    """
+    def text_get_subquestion(self):
+        view = SubQuestionView.as_view()
+        subquestion_id = self.subquestion.id
+        arguments={
+            'pk': subquestion_id
+        }
+        
+        # Query for subquestion
+        request = factory.get(reverse("checklist:subquestion", kwargs=arguments))
+        response = view(request, **arguments)
+        
         # Verify error response
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
