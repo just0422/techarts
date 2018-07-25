@@ -42,7 +42,7 @@ class Question(models.Model):
 class SubQuestion(models.Model):
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=200)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='subquestions')
+    question = models.OneToOneField(Question, on_delete=models.CASCADE, related_name='subquestion')
 
     def __str__(self):
         return "%s" % (self.title)

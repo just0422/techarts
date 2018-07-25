@@ -19,7 +19,7 @@ class SectionSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('question_text', 'question_number', 'section', 'team', 'subquestions')
+        fields = ('id', 'question_text', 'question_number', 'section', 'team', 'subquestion')
 
 class ChecklistItemSerializer(serializers.ModelSerializer):
     class Meta:
