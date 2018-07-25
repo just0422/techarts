@@ -5,7 +5,7 @@ export default function reducer(
         ready: false,
         teams: [],
         campuses: [],
-        currentCampus: '',
+        currentCampus: 'CTG',
         person_name: ''
     }, action){
     switch(action.type){

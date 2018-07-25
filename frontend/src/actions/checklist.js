@@ -80,24 +80,24 @@ export function loadData(person_name, team){
     }
 }
 
-export function toggleQuestion(checklist, section, question, checked, subquestion){
+export function toggleQuestion(checkItem){
     return (dispatch) => {
-        let url = consts.CHECKLIST_ITEM + checklist + "/" + question + "/";
-        axios.put(url, { checked: checked })
+        let url = consts.CHECKLIST_ITEM + checkItem.checklist + "/" + checkItem.question + "/";
+        axios.put(url, { checked: checkItem.checked })
         dispatch({
             type: consts.TOGGLE_QUESTION,
             payload: {
-                sectionId: section,
-                questionId: question,
-                checked: checked
+                sectionId: checkItem.section,
+                questionId: checkItem.question,
+                checked: checkItem.checked
             }
         })
         
         dispatch({
             type: consts.FETCH_SUBQUESTION
         })
-        let sq = consts.SUBQUESTION + "/" + subquestion;
-        axios.get(sq)
+        url = consts.SUBQUESTION + "/" + checkItem.subquestion;
+        axios.get(url)
             .then((response) => {
                 dispatch({
                     type:consts.FETCH_SUBQUESTION_FULFILLED,
@@ -105,6 +105,22 @@ export function toggleQuestion(checklist, section, question, checked, subquestio
                         subquestion: response.data
                     }
                 })
+                fetchSubQuestionList(response.data, checkItem.campus);
             })
+    }
+}
+
+function fetchSubQuestionList(subquestion, campus){
+    switch(subquestion.category){
+        case "lighting": {
+            let url = consts.FIXTURES;
+            let fixtures = "";
+            fixtures = JSON.stringify(subquestion.fixtures)
+            console.log(url);
+            console.log(fixtures);
+            console.log(campus);
+            break;
+        }
+        default: {}
     }
 }

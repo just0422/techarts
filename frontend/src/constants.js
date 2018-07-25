@@ -5,6 +5,7 @@ export const SECTIONS = "/api/sections/"
 export const QUESTIONS = "/api/questions/"
 export const CHECKLIST_ITEM = "/api/checklist_item/"
 export const SUBQUESTION = "/api/subquestion/"
+export const FIXTURES = "/api/fixtures/"
 
 // Generic
 export const SELECT_TEAM = "SELECT_TEAM"

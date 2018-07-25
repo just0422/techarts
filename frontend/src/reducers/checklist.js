@@ -6,16 +6,24 @@ export default function reducer(
         date: '',
         team: '',
         person: '',
+        campus: 'CTG',
         loading: false,
         sections: {},
         subquestion: {},
-        subquestions: [],
+        subquestionList: [],
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false,
         subquestionReady: false
     }, action){
     switch(action.type){
+        case consts.SELECT_CAMPUS: {
+            const currentCampus = action.payload;
+            return {
+                ...state,
+                campus: currentCampus
+            }
+        }
         case consts.FETCH_CHECKLIST: {
             return {
                 ...state,
