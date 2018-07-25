@@ -30,3 +30,8 @@ class ChecklistItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChecklistItem
         fields = '__all__'
+
+class FixtureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fixture
+        fields = '__all__'

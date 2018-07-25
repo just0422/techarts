@@ -297,7 +297,7 @@ class SubQuestionViewTests(TestCase):
     """
     Check that a subquestion can be retrieved if it exists
     """
-    def text_get_subquestion(self):
+    def test_get_subquestion(self):
         view = SubQuestionView.as_view()
         subquestion_id = self.subquestion.id
         arguments={
@@ -315,15 +315,60 @@ class SubQuestionViewTests(TestCase):
     """
     Check that a subquestion that doesn't exist can't be retrieved
     """
-    def text_get_subquestion(self):
+    def test_get_subquestion_that_doesnt_exist(self):
         view = SubQuestionView.as_view()
         subquestion_id = self.subquestion.id
         arguments={
-            'pk': subquestion_id
+            'pk': subquestion_id + 100
         }
         
         # Query for subquestion
         request = factory.get(reverse("checklist:subquestion", kwargs=arguments))
+        response = view(request, **arguments)
+        
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class FixtureViewTests(TestCase):
+    """
+    Setup Fixture
+    """
+    @classmethod
+    def setUpTestData(cls):
+        cls.fixture = Fixture.objects.create(campus="A", channel=1, name="A", group="A")
+
+    """
+    Check that a fixture can be retrieved if it exists
+    """
+    def test_get_fixture(self):
+        view = FixtureView.as_view()
+        arguments = {
+            'campus': self.fixture.campus,
+            'group' : self.fixture.group
+        }
+        
+        # Query for fixture
+        request = factory.get(reverse("checklist:fixtures", kwargs=arguments))
+        response = view(request, **arguments)
+        fixture = response.data[0]
+
+        # Verify response
+        serializer = FixtureSerializer(self.fixture)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(serializer.data, fixture)
+
+    """
+    Check that a fixture cannot be retrieved if it doesn't exist
+    """
+    def test_get_fixture_that_doesnt_exist(self):
+        view = FixtureView.as_view()
+        arguments = {
+            'campus': self.fixture.campus,
+            'group' : "B"
+        }
+
+        # Query for fixture
+        request = factory.get(reverse("checklist:fixtures", kwargs=arguments))
         response = view(request, **arguments)
         
         # Verify error response
