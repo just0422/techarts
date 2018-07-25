@@ -22,9 +22,9 @@ class TeamListViewTest(TestCase):
     Check that all teams are returned"
     """
     def test_team_list(self):
-        #response = self.client.get(reverse("checklist:index"))
         view = TeamListView.as_view()
-
+        
+        # Get all teams through view
         request = factory.get(reverse("checklist:index"))
         response = view(request)
         
@@ -142,6 +142,7 @@ class QuestionsViewTests(TestCase):
         cls.team = Team.objects.create(team_name="A", campus="C")
         cls.section = Section.objects.create(section_name="1", page_number=1, team=cls.team)
         cls.question = Question.objects.create(question_text="ABC", section=cls.section, team=cls.team)
+        cls.subquestion = SubQuestion.objects.create(title="DEF", category="GHI", question=cls.question)
 
     """
     Check that a question can be retrieved if it exists
@@ -196,14 +197,27 @@ class ChecklistItemViewTests(TestCase):
     Check that a checklist item can be created if it doesn't exist
     """
     def test_get_new_checklist_item(self):
+        view = ChecklistItemView.as_view()
+        arguments = {
+            'checklist': str(self.checklist.id),
+            'question': str(self.question2.id)
+        }
+
+        # Gather checklists items before request
         checklist_items_old = ChecklistItem.objects.all()
-
-        response = self.client.get(reverse("checklist:checklist_item", kwargs={'checklist':str(self.checklist.id), 'question':str(self.question2.id)}))
-
-        checklist_items_new = ChecklistItem.objects.all()
         
-        serializer = ChecklistItemSerializer(ChecklistItem.objects.get(checklist=self.checklist, question=self.question2))
+        # Request new checklist item
+        request = factory.get(reverse("checklist:checklist_item", kwargs=arguments))
+        response = view(request, **arguments)
+        
+        # Gather newly created checklist item again
+        checklist = self.checklist
+        question = self.question2
+        checklist_item = ChecklistItem.objects.get(checklist=checklist, question=question)
+        serializer = ChecklistItemSerializer(checklist_item)
 
+        # Verify that there was a change and that the change was correct
+        checklist_items_new = ChecklistItem.objects.all()
         self.assertNotEqual(checklist_items_old, checklist_items_new)
         self.assertEqual(serializer.data, response.data)
     
@@ -212,27 +226,60 @@ class ChecklistItemViewTests(TestCase):
     """
     def test_get_existing_checklist_item(self):
         view = ChecklistItemView.as_view()
-        request = factory.get(reverse("checklist:checklist_item", kwargs={'checklist':str(self.checklist.id), 'question':str(self.question1.id)}))
+        arguments = {
+            'checklist': str(self.checklist.id),
+            'question': str(self.question1.id)
+        }
         
-        kwargs={'checklist':str(self.checklist.id), 'question':str(self.question1.id)}
-        response = view(request, **kwargs)
+        # Request existing checklist item
+        request = factory.get(reverse("checklist:checklist_item", kwargs=arguments))
+        response = view(request, **arguments)
         
+        # Verify that the checklist item is correct
         serializer = ChecklistItemSerializer(self.checklistitem)
-
         self.assertEqual(serializer.data, response.data)
 
     """
     Check that a checklist item can be updated
-    ""
-    def test_update_checklist_item(self):
-        print (self.checklistitem.checked)
-        view = ChecklistItemView.as_view()
-        request = factory.put(reverse("checklist:checklist_item", kwargs={'checklist':str(self.checklist.id), 'question':str(self.question1.id)}), data={"checked":"true"})
-
-        response = view(request)
-        
-        print (self.checklistitem.checked)
-        print (ChecklistItem.objects.get(id=self.checklistitem.id).checked)
-
-    #def test_update_checklist_item_that_doesnt_exist(self):
     """
+    def test_update_checklist_item(self):
+        view = ChecklistItemView.as_view()
+        arguments = {
+            'checklist': str(self.checklist.id),
+            'question': str(self.question1.id)
+        }
+        params = {
+            'checked': 'true'
+        }
+        
+        # Attempt to update checklist item
+        request = factory.put(reverse("checklist:checklist_item", kwargs=arguments), data=params)
+        response = view(request, **arguments)
+
+        # Verify that the checklist item was changed and correct response returned
+        checklistitem = ChecklistItem.objects.get(id=self.checklistitem.id)
+        update_checklistitem = ChecklistItemSerializer(checklistitem)
+        test_checklistitem = ChecklistItemSerializer(self.checklistitem)
+        self.assertNotEqual(test_checklistitem.data, update_checklistitem.data)
+        self.assertNotEqual(test_checklistitem.data, response.data)
+        self.assertEqual(update_checklistitem.data, response.data)
+    
+    """
+    Check that a checklist item that doesn't exist can't be updated
+    """
+    def test_update_checklist_item_that_doesnt_exist(self):
+        view = ChecklistItemView.as_view()
+        arguments = {
+            'checklist': str(self.checklist.id),
+            'question': str(self.question2.id)
+        }
+        params = {
+            'checked': 'true'
+        }
+        
+        # Attempt to update checklist item
+        request = factory.put(reverse("checklist:checklist_item", kwargs=arguments), data=params)
+        response = view(request, **arguments)
+
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

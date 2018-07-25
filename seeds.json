@@ -108,5 +108,32 @@
         "section":2,
         "team": 1
     }
+},
+{
+    "model": "checklist.subquestion",
+    "pk": 1,
+    "fields": {
+        "title": "movers",
+        "category": "lighting",
+        "question": 1
+    }
+},
+{
+    "model": "checklist.subquestion",
+    "pk": 2,
+    "fields": {
+        "title": "leds",
+        "category": "lighting",
+        "question": 3
+    }
+},
+{
+    "model": "checklist.subquestion",
+    "pk": 3,
+    "fields": {
+        "title": "others",
+        "category": "lighting",
+        "question": 2
+    }
 }
 ]

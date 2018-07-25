@@ -64,10 +64,22 @@ class ChecklistItemView(generics.RetrieveUpdateAPIView):
     serializer_class=ChecklistItemSerializer
 
     def get_queryset(self):
-        return ChecklistItem.objects.filter(
-            checklist = Checklist.objects.get(id=self.kwargs.get('checklist')),
-            question = Question.objects.get(id=self.kwargs.get('question'))
-            )[:1]
+        try:
+            checklist_id = self.kwargs.get('checklist')
+            checklist = Checklist.objects.get(id=checklist_id)
+
+            question_id = self.kwargs.get('question')
+            question = Question.objects.get(id=question_id)
+
+            return ChecklistItem.objects.filter(
+                checklist = Checklist.objects.get(id=self.kwargs.get('checklist')),
+                question = Question.objects.get(id=self.kwargs.get('question'))
+                )[:1]
+        except Checklist.DoesNotExist:
+            raise exceptions.NotFound('Checklist not found')
+        except Question.DoesNotExist:
+            raise exceptions.NotFound('Question not found')
+
 
     def get_object(self):
         if len(self.get_queryset()) == 0:
@@ -80,6 +92,8 @@ class ChecklistItemView(generics.RetrieveUpdateAPIView):
         return get_object_or_404(queryset)
     
     def update(self, *args, **kwargs):
+        if len(self.get_queryset()) == 0:
+            raise exceptions.NotFound('Checklist Item not found')
         checklist_item = self.get_queryset()[0]
         checklist_item.checked = bool(self.request.data['checked'])
         checklist_item.save()
