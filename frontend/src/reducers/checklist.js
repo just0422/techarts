@@ -8,9 +8,12 @@ export default function reducer(
         person: '',
         loading: false,
         sections: {},
+        subquestion: {},
+        subquestions: [],
         checklistReady: false,
         sectionsReady: false,
-        questionsReady: false
+        questionsReady: false,
+        subquestionReady: false
     }, action){
     switch(action.type){
         case consts.FETCH_CHECKLIST: {
@@ -73,8 +76,18 @@ export default function reducer(
                 sections: sections
             }
         }
+        case consts.FETCH_SUBQUESTION:{
+            return {
+                ...state,
+                subquestionReady: false
+            }
+        }
         case consts.FETCH_SUBQUESTION_FULFILLED:{
-            console.log(action.payload);
+            return {
+                ...state,
+                subquestion: action.payload.subquestion,
+                subquestionReady: true
+            }
         }
         default:
             return state

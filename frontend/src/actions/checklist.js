@@ -102,7 +102,7 @@ export function toggleQuestion(checklist, section, question, checked, subquestio
                 dispatch({
                     type:consts.FETCH_SUBQUESTION_FULFILLED,
                     payload: {
-                        subquestions: response.data
+                        subquestion: response.data
                     }
                 })
             })

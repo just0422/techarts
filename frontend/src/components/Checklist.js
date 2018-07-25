@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Grid, Row } from "react-bootstrap";
+import { Grid, Row, Modal } from "react-bootstrap";
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
@@ -16,9 +16,12 @@ const mapStateToProps = (store) => {
         person: store.checklist.person,
         loading: store.checklist.loading,
         sections: store.checklist.sections,
+        subquestion: store.checklist.subquestion,
+        subquestions: store.checklist.subquestions,
         checklistReady: store.checklist.checklistReady,
         sectionsReady: store.checklist.sectionsReady,
-        questionsReady: store.checklist.questionsReady
+        questionsReady: store.checklist.questionsReady,
+        subquestionReady: store.checklist.subquestionReady,
     }
 }
 
@@ -45,7 +48,6 @@ class Checklist extends Component {
     }
 
     render(){
-        console.log("rendering");
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
            sections = 
@@ -61,16 +63,25 @@ class Checklist extends Component {
                 })
 
         }
-            return (
-                <div>
-                    <NavigationBar />
-                    <Grid>
-                        <Row>
-                            {sections}
-                        </Row>
-                    </Grid>
-                </div>
-            );
+
+        return (
+            <div>
+                <NavigationBar />
+                <Grid>
+                    <Row>
+                        {sections}
+                    </Row>
+                </Grid>
+                <Modal show={this.props.subquestionReady}>
+                    <Modal.Header>
+                        {this.props.subquestion.title}
+                    </Modal.Header>
+                    <Modal.Body>
+                        {this.props.subquestion.category}
+                    </Modal.Body>
+                </Modal>
+            </div>
+        );
     }
 }
 
