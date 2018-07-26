@@ -61,7 +61,7 @@ class Checklist extends Component {
         switch(category) {
             case "lighting": {
                 return (
-                    <PanelGroup accordion id="fixtures-subquestion">
+                    <PanelGroup id="fixtures-subquestion">
                     { 
                         list.map( (fixture) => {
                             return (<Fixture

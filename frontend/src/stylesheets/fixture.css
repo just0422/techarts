@@ -5,3 +5,15 @@
 .working-fixtures-prompt{
     font-size: 24px;
 }
+
+.working-fixtures-save-button{
+    margin-top: 10px;
+}
+
+.panel-heading {
+    cursor: pointer;
+}
+
+.panel-heading:active {
+    box-shadow:inset 0 0 0 99999px rgba(0,0,0,0.2)
+}

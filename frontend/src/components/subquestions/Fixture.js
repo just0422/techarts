@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel, Row, Col, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Panel, Row, Col, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 import "../../stylesheets/generic.css";
 import "../../stylesheets/fixture.css";
@@ -9,18 +9,36 @@ export default class Fixture extends Component {
         super();
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.openPanel = this.openPanel.bind(this); 
+
+        this.state = {
+            open: false
+        }
     }
 
     handleChange(e){
         // Pass value back up the chain
     }
 
+    handleClick(){
+        this.setState({ 
+            open: false
+        })
+    }
+
+    openPanel(){
+        this.setState({
+            open: true
+        })
+    }
+
     render() {
         let style = this.props.working ? "success" : "danger";
         return (
-            <Panel eventKey={this.props.id} bsStyle={style}>
-                <Panel.Heading>
-                    <Panel.Title toggle>{this.props.name}</Panel.Title>
+            <Panel eventKey={this.props.id} bsStyle={style} expanded={this.state.open}>
+                <Panel.Heading onClick={this.openPanel}>
+                    <Panel.Title>{this.props.name}</Panel.Title>
                 </Panel.Heading>
                 <Panel.Body collapsible>
                     <Row>
@@ -43,6 +61,11 @@ export default class Fixture extends Component {
                             </FormGroup>
                         </Row>
                     }
+                    <Row>
+                        <Col xs={12}>
+                            <Button bsStyle="primary" block className="working-fixtures-save-button" onClick={this.handleClick}>Save</Button>
+                        </Col>
+                    </Row>
                 </Panel.Body>
             </Panel>
         )
