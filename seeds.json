@@ -113,7 +113,8 @@
     "model": "checklist.subquestion",
     "pk": 1,
     "fields": {
-        "title": "movers",
+        "title": "Movers",
+        "categoryId": "movers",
         "category": "lighting",
         "question": 1
     }
@@ -122,7 +123,8 @@
     "model": "checklist.subquestion",
     "pk": 2,
     "fields": {
-        "title": "leds",
+        "title": "LEDs",
+        "categoryId": "leds",
         "category": "lighting",
         "question": 3
     }
@@ -131,9 +133,58 @@
     "model": "checklist.subquestion",
     "pk": 3,
     "fields": {
-        "title": "others",
+        "title": "Others",
+        "categoryId": "others",
         "category": "lighting",
         "question": 2
+    }
+},
+{
+    "model": "checklist.fixture",
+    "pk": 1,
+    "fields": {
+        "campus": "CTG",
+        "channel": 1,
+        "name": "Infinity",
+        "group": "movers",
+        "active": true,
+        "working": true
+    }
+},
+{
+    "model": "checklist.fixture",
+    "pk": 2,
+    "fields": {
+        "campus": "CTG",
+        "channel": 2,
+        "name": "2Ks",
+        "group": "movers",
+        "active": true,
+        "working": true
+    }
+},
+{
+    "model": "checklist.fixture",
+    "pk": 3,
+    "fields": {
+        "campus": "CTG",
+        "channel": 3,
+        "name": "60s",
+        "group": "leds",
+        "active": true,
+        "working": true
+    }
+},
+{
+    "model": "checklist.fixture",
+    "pk": 4,
+    "fields": {
+        "campus": "CTG",
+        "channel": 4,
+        "name": "Optio",
+        "group": "leds",
+        "active": true,
+        "working": true
     }
 }
 ]

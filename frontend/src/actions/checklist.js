@@ -93,9 +93,7 @@ export function toggleQuestion(checkItem){
             }
         })
         
-        dispatch({
-            type: consts.FETCH_SUBQUESTION
-        })
+        dispatch({ type: consts.FETCH_SUBQUESTION })
         url = consts.SUBQUESTION + "/" + checkItem.subquestion;
         axios.get(url)
             .then((response) => {
@@ -105,20 +103,26 @@ export function toggleQuestion(checkItem){
                         subquestion: response.data
                     }
                 })
-                fetchSubQuestionList(response.data, checkItem.campus);
+                fetchSubQuestionList(dispatch, response.data, checkItem.campus);
             })
     }
 }
 
-function fetchSubQuestionList(subquestion, campus){
+function fetchSubQuestionList(dispatch, subquestion, campus) {
     switch(subquestion.category){
         case "lighting": {
-            let url = consts.FIXTURES;
-            let fixtures = "";
-            fixtures = JSON.stringify(subquestion.fixtures)
-            console.log(url);
-            console.log(fixtures);
-            console.log(campus);
+            let group = subquestion.categoryId;
+            let url = consts.FIXTURES + campus + "/" + group;
+            dispatch({ type: consts.FETCH_FIXTURES })
+
+            axios.get(url)
+                .then(function(response){
+                    console.log(response.data);
+/*                    dispatch({ 
+                        type: consts.FETCH_FIXTURES_FULFILLED,
+                        fixtures: response.data
+                    })*/
+                })
             break;
         }
         default: {}
