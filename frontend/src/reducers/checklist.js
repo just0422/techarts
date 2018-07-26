@@ -14,7 +14,8 @@ export default function reducer(
         checklistReady: false,
         sectionsReady: false,
         questionsReady: false,
-        subquestionReady: false
+        subquestionReady: false,
+        subquestionListReady: false,
     }, action){
     switch(action.type){
         case consts.SELECT_CAMPUS: {
@@ -95,6 +96,19 @@ export default function reducer(
                 ...state,
                 subquestion: action.payload.subquestion,
                 subquestionReady: true
+            }
+        }
+        case consts.FETCH_FIXTURES:{
+            return {
+                ...state,
+                subquestionListReady: false
+            }
+        }
+        case consts.FETCH_FIXTURES_FULFILLED:{
+            return {
+                ...state,
+                subquestionList: action.payload.fixtures,
+                subquestionListReady: true
             }
         }
         default:

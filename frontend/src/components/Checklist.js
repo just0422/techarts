@@ -5,6 +5,7 @@ import { Grid, Row, Modal } from "react-bootstrap";
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
+import Fixture from "./subquestions/Fixture"
 import { loadData, toggleQuestion } from "../actions/checklist";
 import "../stylesheets/checklist.css";
 
@@ -22,7 +23,8 @@ const mapStateToProps = (store) => {
         checklistReady: store.checklist.checklistReady,
         sectionsReady: store.checklist.sectionsReady,
         questionsReady: store.checklist.questionsReady,
-        subquestionReady: store.checklist.subquestionReady
+        subquestionReady: store.checklist.subquestionReady,
+        subquestionListReady: store.checklist.subquestionListReady
     }
 }
 
@@ -55,6 +57,28 @@ class Checklist extends Component {
         });
     }
 
+    loadSubquestion(list, category){
+        switch(category) {
+            case "lighting": {
+                return list.map( (fixture) => {
+                    console.log(fixture);
+                    return (<Fixture
+                                key={fixture.id}
+                                id={fixture.id}
+                                name={fixture.name}
+                                channel={fixture.channel}
+                                reason={fixture.reason}
+                                active={fixture.active}
+                                working={fixture.working} 
+                            />)
+                })
+            }
+            default: {
+                return <p>Error!</p>
+            }
+        }
+    }
+
     render(){
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
@@ -71,6 +95,12 @@ class Checklist extends Component {
                 })
 
         }
+        let subquestions = <p>Loading...</p>;
+        let subquestionList = this.props.subquestionList;
+        let category = this.props.subquestion.category;
+        if (this.props.subquestionListReady){
+            subquestions = this.loadSubquestion(subquestionList, category)
+        }
 
         return (
             <div>
@@ -85,7 +115,7 @@ class Checklist extends Component {
                         {this.props.subquestion.title}
                     </Modal.Header>
                     <Modal.Body>
-                        {this.props.subquestion.category}
+                        {subquestions}
                     </Modal.Body>
                 </Modal>
             </div>

@@ -117,11 +117,12 @@ function fetchSubQuestionList(dispatch, subquestion, campus) {
 
             axios.get(url)
                 .then(function(response){
-                    console.log(response.data);
-/*                    dispatch({ 
+                    dispatch({ 
                         type: consts.FETCH_FIXTURES_FULFILLED,
-                        fixtures: response.data
-                    })*/
+                        payload: {
+                            fixtures: response.data
+                        }
+                    })
                 })
             break;
         }
