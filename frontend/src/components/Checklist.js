@@ -116,7 +116,7 @@ class Checklist extends Component {
                 </Grid>
                 <Modal show={this.props.subquestionReady}>
                     <Modal.Header>
-                        {this.props.subquestion.title}
+                        <h3 className="text-center">{this.props.subquestion.title}</h3>
                     </Modal.Header>
                     <Modal.Body>
                         {subquestions}
