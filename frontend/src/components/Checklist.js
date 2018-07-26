@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Grid, Row, Modal } from "react-bootstrap";
+import { Grid, Row, Modal, PanelGroup } from "react-bootstrap";
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
@@ -60,18 +60,22 @@ class Checklist extends Component {
     loadSubquestion(list, category){
         switch(category) {
             case "lighting": {
-                return list.map( (fixture) => {
-                    console.log(fixture);
-                    return (<Fixture
-                                key={fixture.id}
-                                id={fixture.id}
-                                name={fixture.name}
-                                channel={fixture.channel}
-                                reason={fixture.reason}
-                                active={fixture.active}
-                                working={fixture.working} 
-                            />)
-                })
+                return (
+                    <PanelGroup accordion id="fixtures-subquestion">
+                    { 
+                        list.map( (fixture) => {
+                            return (<Fixture
+                                        key={fixture.id}
+                                        id={fixture.id}
+                                        name={fixture.name}
+                                        channel={fixture.channel}
+                                        reason={fixture.reason}
+                                        working={fixture.working} 
+                                    />)
+                        })
+                    }
+                    </PanelGroup>
+                )
             }
             default: {
                 return <p>Error!</p>

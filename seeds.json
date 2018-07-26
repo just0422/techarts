@@ -160,7 +160,7 @@
         "name": "2Ks",
         "group": "movers",
         "active": true,
-        "working": true
+        "working": false
     }
 },
 {
@@ -184,7 +184,7 @@
         "name": "Optio",
         "group": "leds",
         "active": true,
-        "working": true
+        "working": false 
     }
 }
 ]
