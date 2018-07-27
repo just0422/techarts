@@ -111,6 +111,19 @@ export default function reducer(
                 subquestionListReady: true
             }
         }
+        case consts.TOGGLE_FIXTURES_WORKING: {
+            const { id, working } = action.payload;
+
+            return {
+                ...state,
+                subquestionList: state.subquestionList.map( (fixture) => { 
+                    if (fixture.id === id)  
+                        fixture.working = working;
+                    
+                    return fixture;
+                })
+            }
+        }
         default:
             return state
     }

@@ -9,7 +9,7 @@ export default class Fixture extends Component {
         super();
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.closePanel = this.closePanel.bind(this);
         this.openPanel = this.openPanel.bind(this); 
 
         this.state = {
@@ -17,11 +17,12 @@ export default class Fixture extends Component {
         }
     }
 
-    handleChange(e){
+    handleChange(){
         // Pass value back up the chain
+        this.props.toggleWorking(this.props.id, !this.props.working);
     }
 
-    handleClick(){
+    closePanel(){
         this.setState({ 
             open: false
         })
@@ -35,6 +36,7 @@ export default class Fixture extends Component {
 
     render() {
         let style = this.props.working ? "success" : "danger";
+        console.log("RENDER - " + this.props.working);
         return (
             <Panel eventKey={this.props.id} bsStyle={style} expanded={this.state.open}>
                 <Panel.Heading onClick={this.openPanel}>
@@ -63,7 +65,7 @@ export default class Fixture extends Component {
                     }
                     <Row>
                         <Col xs={12}>
-                            <Button bsStyle="primary" block className="working-fixtures-save-button" onClick={this.handleClick}>Save</Button>
+                            <Button bsStyle="primary" block className="working-fixtures-save-button" onClick={this.closePanel}>Save</Button>
                         </Col>
                     </Row>
                 </Panel.Body>

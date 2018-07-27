@@ -129,3 +129,15 @@ function fetchSubQuestionList(dispatch, subquestion, campus) {
         default: {}
     }
 }
+
+export function toggleWorking(id, working){
+    return (dispatch) => {
+        dispatch({
+            type: consts.TOGGLE_FIXTURES_WORKING,
+            payload: {
+                id: id,
+                working: working
+            }
+        })
+    };
+}
