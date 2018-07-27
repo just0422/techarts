@@ -141,3 +141,15 @@ export function toggleWorking(id, working){
         })
     };
 }
+
+export function saveWorking(id, working, reason){
+    return (dispatch) => {
+        let url = consts.FIXTURE + id + "/";
+        dispatch({ type: consts.SAVE_FIXTURE });
+
+        axios.patch(url, { working: working, reason: reason })
+            .then(function(response){
+                console.log(response);
+            })
+    };
+}

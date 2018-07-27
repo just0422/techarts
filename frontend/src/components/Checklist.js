@@ -6,7 +6,7 @@ import { Grid, Row, Modal, PanelGroup } from "react-bootstrap";
 import NavigationBar from "./NavBar";
 import Section from "./Section";
 import Fixture from "./subquestions/Fixture"
-import { loadData, toggleQuestion, toggleWorking } from "../actions/checklist";
+import { loadData, toggleQuestion, toggleWorking, saveWorking } from "../actions/checklist";
 import "../stylesheets/checklist.css";
 
 const mapStateToProps = (store) => {
@@ -31,7 +31,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => ({
     loadData: (person, team) => dispatch(loadData(person, team)),
     toggleQuestion: (checkItem) => dispatch(toggleQuestion(checkItem)),
-    toggleWorking: (id, working) => dispatch(toggleWorking(id, working))
+    toggleWorking: (id, working) => dispatch(toggleWorking(id, working)),
+    saveWorking: (id, working, reason) => dispatch(saveWorking(id, working, reason))
 });
 
 class Checklist extends Component {
@@ -59,7 +60,6 @@ class Checklist extends Component {
     }
 
     loadSubquestion(list, category){
-        console.log("LOADING");
         switch(category) {
             case "lighting": {
                 return (
@@ -73,6 +73,7 @@ class Checklist extends Component {
                                         channel={fixture.channel}
                                         reason={fixture.reason}
                                         working={fixture.working} 
+                                        saveWorking={this.props.saveWorking}
                                         toggleWorking={this.props.toggleWorking}
                                     />)
                         })

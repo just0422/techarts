@@ -106,7 +106,7 @@ class ChecklistItemView(generics.RetrieveUpdateAPIView):
 
         return Response(serializer.data)
 
-class FixtureView(generics.ListAPIView):
+class FixtureListView(generics.ListAPIView):
     serializer_class=FixtureSerializer
     
     def get_queryset(self):
@@ -117,3 +117,7 @@ class FixtureView(generics.ListAPIView):
         if len(queryset) == 0:
             raise exceptions.NotFound('No Fixtures found')
         return queryset
+
+class FixtureView(generics.RetrieveUpdateAPIView):
+    serializer_class=FixtureSerializer
+    queryset = Fixture.objects.all()

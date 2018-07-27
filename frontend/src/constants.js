@@ -5,6 +5,7 @@ export const SECTIONS = "/api/sections/"
 export const QUESTIONS = "/api/questions/"
 export const CHECKLIST_ITEM = "/api/checklist_item/"
 export const SUBQUESTION = "/api/subquestion/"
+export const FIXTURE = "/api/fixture/"
 export const FIXTURES = "/api/fixtures/"
 
 // Generic
@@ -30,3 +31,5 @@ export const FETCH_SUBQUESTION_FULFILLED = FETCH_SUBQUESTION + "_FULFILLED";
 export const FETCH_FIXTURES = "FETCH_FIXTURES";
 export const FETCH_FIXTURES_FULFILLED = FETCH_FIXTURES + "_FULFILLED";
 export const TOGGLE_FIXTURES_WORKING = "TOGGLE_FIXTURES_WORKING";
+export const SAVE_FIXTURE = "SAVE_FIXTURE";
+export const SAVE_FIXTURE_FULFILLED = SAVE_FIXTURE + "_FULFILLED";

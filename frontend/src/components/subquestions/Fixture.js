@@ -23,6 +23,10 @@ export default class Fixture extends Component {
     }
 
     closePanel(){
+        let reason = "";
+        if (this.reason != null)
+            reason = this.reason.value;
+        this.props.saveWorking(this.props.id, this.props.working, reason) 
         this.setState({ 
             open: false
         })
@@ -36,7 +40,6 @@ export default class Fixture extends Component {
 
     render() {
         let style = this.props.working ? "success" : "danger";
-        console.log("RENDER - " + this.props.working);
         return (
             <Panel eventKey={this.props.id} bsStyle={style} expanded={this.state.open}>
                 <Panel.Heading onClick={this.openPanel}>
@@ -59,7 +62,7 @@ export default class Fixture extends Component {
                         <Row>
                             <FormGroup controlId="formControlsTextarea" className="working-fixtures-reason">
                                 <ControlLabel>Reason:</ControlLabel>
-                                <FormControl componentClass="textarea" />
+                                <FormControl componentClass="textarea" defaultValue={this.props.reason} inputRef={ ref => { this.reason = ref; }} />
                             </FormGroup>
                         </Row>
                     }

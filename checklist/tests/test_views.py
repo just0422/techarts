@@ -329,7 +329,7 @@ class SubQuestionViewTests(TestCase):
         # Verify error response
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-class FixtureViewTests(TestCase):
+class FixtureListViewTests(TestCase):
     """
     Setup Fixture
     """
@@ -341,7 +341,7 @@ class FixtureViewTests(TestCase):
     Check that a fixture can be retrieved if it exists
     """
     def test_get_fixture(self):
-        view = FixtureView.as_view()
+        view = FixtureListView.as_view()
         arguments = {
             'campus': self.fixture.campus,
             'group' : self.fixture.group
@@ -361,7 +361,7 @@ class FixtureViewTests(TestCase):
     Check that a fixture cannot be retrieved if it doesn't exist
     """
     def test_get_fixture_that_doesnt_exist(self):
-        view = FixtureView.as_view()
+        view = FixtureListView.as_view()
         arguments = {
             'campus': self.fixture.campus,
             'group' : "B"
@@ -371,5 +371,104 @@ class FixtureViewTests(TestCase):
         request = factory.get(reverse("checklist:fixtures", kwargs=arguments))
         response = view(request, **arguments)
         
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class FixtureListViewTests(TestCase):
+    """
+    Setup Fixture
+    """
+    @classmethod
+    def setUpTestData(cls):
+        cls.fixture = Fixture.objects.create(campus="A", channel=1, name="A", group="A")
+
+    """
+    Check that a fixture can be retrieved if it exists
+    """
+    def test_get_fixture(self):
+        view = FixtureView.as_view()
+        arguments = {
+            'pk': str(self.fixture.id)
+        }
+        
+        # Request Fixture
+        request = factory.get(reverse("checklist:fixture", kwargs=arguments))
+        response = view(request, **arguments)
+
+        # Verify that fixture is correct
+        serializer = FixtureSerializer(self.fixture)
+        self.assertEqual(serializer.data, response.data)
+
+    """
+    Check that a fixture cannot be retrieved if it doesn't exist
+    """
+    def test_get_fixture_that_doesnt_exist(self):
+        view = FixtureView.as_view()
+        arguments = {
+            'pk': str(self.fixture.id + 100)
+        }
+
+        # Request fixture
+        request = factory.get(reverse("checklist:fixture", kwargs=arguments))
+        response = view(request, **arguments)
+
+        # Verify error response
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    """
+    Check that a fixture can be updated
+    """
+    def test_update_fixture(self):
+        view = FixtureView.as_view()
+        arguments = {
+            'pk': str(self.fixture.id)
+        }
+        params = {
+            'working': False,
+            'reason': 'ABC'
+        }
+
+        # Attempt to update checklist item
+        request = factory.patch(reverse("checklist:fixture", kwargs=arguments), data=params)
+        response = view(request, **arguments)
+
+        # Verify that fixture was changed and correct response returned
+        fixture = Fixture.objects.get(id=self.fixture.id)
+        update_fixture = FixtureSerializer(fixture)
+        test_fixture = FixtureSerializer(self.fixture)
+
+        self.assertNotEqual(test_fixture.data, update_fixture.data)
+        self.assertNotEqual(test_fixture.data, response.data)
+        self.assertEqual(update_fixture.data, response.data)
+
+        params = {
+            'working': True 
+        }
+
+        # Attempt to update checklist item
+        request = factory.patch(reverse("checklist:fixture", kwargs=arguments), data=params)
+        response = view(request, **arguments)
+        
+        # Verify that reason was emptied
+        serializer = FixtureSerializer(self.fixture)
+        self.assertEqual(serializer.data, response.data)
+
+    """
+    Check that a fixture that doesn't exist can't be updated
+    """
+    def test_update_fixture_that_doesnt_exist(self):
+        view = FixtureView.as_view()
+        arguments = {
+            'pk': str(self.fixture.id + 100)
+        }
+        params = {
+            'working': False,
+            'reason': 'ABC'
+        }
+
+        # Attempt to update checklist item
+        request = factory.put(reverse("checklist:fixture", kwargs=arguments), data=params)
+        response = view(request, **arguments)
+
         # Verify error response
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

@@ -87,3 +87,8 @@ class Fixture(models.Model):
 
     def __str__(self):
         return "%s - %s" % (str(self.channel), str(self.name))
+
+    def save(self, *args, **kwargs):
+        if self.working:
+            self.reason = ''
+        super(Fixture, self).save(*args, **kwargs)
