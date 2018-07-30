@@ -94,7 +94,7 @@ export function toggleQuestion(checkItem){
             }
         })
         
-        if (checkItem.checked){
+        if (checkItem.checked && checkItem.subquestion != null){
             dispatch({ type: consts.FETCH_SUBQUESTION })
             url = consts.SUBQUESTION + "/" + checkItem.subquestion;
             axios.get(url)

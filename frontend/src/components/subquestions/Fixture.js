@@ -41,7 +41,7 @@ export default class Fixture extends Component {
     render() {
         let style = this.props.working ? "success" : "danger";
         return (
-            <Panel eventKey={this.props.id} bsStyle={style} expanded={this.state.open}>
+            <Panel eventKey={this.props.id} bsStyle={style} defaultExpanded={this.state.open}>
                 <Panel.Heading onClick={this.openPanel}>
                     <Panel.Title>{this.props.name}</Panel.Title>
                 </Panel.Heading>
