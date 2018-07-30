@@ -80,6 +80,7 @@ export function loadData(person_name, team){
     }
 }
 
+
 export function toggleQuestion(checkItem){
     return (dispatch) => {
         let url = consts.CHECKLIST_ITEM + checkItem.checklist + "/" + checkItem.question + "/";
@@ -93,18 +94,20 @@ export function toggleQuestion(checkItem){
             }
         })
         
-        dispatch({ type: consts.FETCH_SUBQUESTION })
-        url = consts.SUBQUESTION + "/" + checkItem.subquestion;
-        axios.get(url)
-            .then((response) => {
-                dispatch({
-                    type:consts.FETCH_SUBQUESTION_FULFILLED,
-                    payload: {
-                        subquestion: response.data
-                    }
+        if (checkItem.checked){
+            dispatch({ type: consts.FETCH_SUBQUESTION })
+            url = consts.SUBQUESTION + "/" + checkItem.subquestion;
+            axios.get(url)
+                .then((response) => {
+                    dispatch({
+                        type:consts.FETCH_SUBQUESTION_FULFILLED,
+                        payload: {
+                            subquestion: response.data
+                        }
+                    })
+                    fetchSubQuestionList(dispatch, response.data, checkItem.campus);
                 })
-                fetchSubQuestionList(dispatch, response.data, checkItem.campus);
-            })
+        }
     }
 }
 
@@ -128,6 +131,12 @@ function fetchSubQuestionList(dispatch, subquestion, campus) {
         }
         default: {}
     }
+}
+
+export function resetSubQuestion(){
+    return (dispatch) => {
+        dispatch({ type: consts.RESET_SUBQUESTION })
+    };
 }
 
 export function toggleWorking(id, working){

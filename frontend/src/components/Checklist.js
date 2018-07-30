@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Grid, Row, Modal, PanelGroup } from "react-bootstrap";
+import { Grid, Row, Modal, PanelGroup, Button } from "react-bootstrap";
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
 import Fixture from "./subquestions/Fixture"
-import { loadData, toggleQuestion, toggleWorking, saveWorking } from "../actions/checklist";
+import { loadData, toggleQuestion, toggleWorking, saveWorking, resetSubQuestion } from "../actions/checklist";
 import "../stylesheets/checklist.css";
 
 const mapStateToProps = (store) => {
@@ -31,6 +31,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => ({
     loadData: (person, team) => dispatch(loadData(person, team)),
     toggleQuestion: (checkItem) => dispatch(toggleQuestion(checkItem)),
+    resetSubQuestion: () => dispatch(resetSubQuestion()),
     toggleWorking: (id, working) => dispatch(toggleWorking(id, working)),
     saveWorking: (id, working, reason) => dispatch(saveWorking(id, working, reason))
 });
@@ -40,6 +41,7 @@ class Checklist extends Component {
         super();
         
         this.toggleQuestion = this.toggleQuestion.bind(this);
+        this.handleModalClose = this.handleModalClose.bind(this);
     }
 
     componentWillMount(){
@@ -87,6 +89,10 @@ class Checklist extends Component {
         }
     }
 
+    handleModalClose(){
+        this.props.resetSubQuestion();
+    }
+
     render(){
         let sections = <p>Loading...</p>;
         if (this.props.sectionsReady){
@@ -125,6 +131,9 @@ class Checklist extends Component {
                     <Modal.Body>
                         {subquestions}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.handleModalClose}>Finish</Button>
+                    </Modal.Footer>
                 </Modal>
             </div>
         );

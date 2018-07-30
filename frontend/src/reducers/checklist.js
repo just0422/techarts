@@ -98,6 +98,15 @@ export default function reducer(
                 subquestionReady: true
             }
         }
+        case consts.RESET_SUBQUESTION: {
+            return {
+                ...state,
+                subquestion: {},
+                subquestionList: [],
+                subquestionReady: false,
+                subquestionListReady: false
+            }
+        }
         case consts.FETCH_FIXTURES:{
             return {
                 ...state,
