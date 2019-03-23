@@ -44,9 +44,8 @@ class Checklist extends Component {
         this.handleModalClose = this.handleModalClose.bind(this);
     }
 
-    componentWillMount(){
+    componentDidMount(){
         let { person_name, team } = this.props.match.params;
-
         this.props.loadData(person_name, team);
     }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Navbar, Nav, NavDropdown, MenuItem } from "react-bootstrap";
 
 import { fetchTeams, startChecklist, selectTeam } from "../actions/generics";
+import { loadData } from "../actions/checklist";
 import "../stylesheets/navbar.css";
 
 
@@ -19,7 +20,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => ({
     fetchTeams: () => dispatch(fetchTeams()),
     startChecklist: (values) => dispatch(startChecklist(values)),
-    selectTeam: (teamId) => dispatch(selectTeam(teamId))
+    selectTeam: (teamId) => dispatch(selectTeam(teamId)),
+    loadData: (person, team) => dispatch(loadData(person, team))
 });
 
 
@@ -29,7 +31,8 @@ class NavigationBar extends Component {
         this.props.startChecklist({
             team: teamId,
             person_name: this.props.person_name
-        })
+				})
+				this.props.loadData(this.props.person_name, teamId);
     }
     
     // Get teams from the server
