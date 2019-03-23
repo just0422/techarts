@@ -25,6 +25,14 @@ export default function reducer(
                 currentCampus: currentCampus
             }
         }
+        case consts.FETCH_CHECKLIST_FULFILLED: 
+        case consts.SET_PERSON_NAME: {
+            const { person } = action.payload;
+            return {
+              ...state,
+              person_name: person
+            }
+        }
         default: {
             return state;
         }

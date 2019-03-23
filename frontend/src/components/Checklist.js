@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Grid, Row, Modal, PanelGroup, Button } from "react-bootstrap";
+import { Row, Modal, PanelGroup, Button } from "react-bootstrap";
 
 import NavigationBar from "./NavBar";
 import Section from "./Section";
@@ -119,11 +119,7 @@ class Checklist extends Component {
         return (
             <div>
                 <NavigationBar />
-                <Grid>
-                    <Row>
-                        {sections}
-                    </Row>
-                </Grid>
+                <Row>{sections}</Row>
                 <Modal show={this.props.subquestionReady}>
                     <Modal.Header>
                         <h3 className="text-center">{this.props.subquestion.title}</h3>

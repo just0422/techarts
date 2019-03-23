@@ -38,4 +38,12 @@ body {
     font-size: 18px;
 }
 
+.website-interaction-message{
+    position: absolute;
+    text-align: center;
+    top: 10px;
+    left: 15px;
+    right: 15px;
+    box-shadow: 0 0 30px #005DAE
+  }
 

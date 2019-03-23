@@ -1,12 +1,14 @@
+const backend_url = "http://techapi.justin-maldonado.com"
+
 // URLS
-export const TEAMS = "/api/teams/"
-export const CHECKLIST = "/api/checklist/"
-export const SECTIONS = "/api/sections/"
-export const QUESTIONS = "/api/questions/"
-export const CHECKLIST_ITEM = "/api/checklist_item/"
-export const SUBQUESTION = "/api/subquestion/"
-export const FIXTURE = "/api/fixture/"
-export const FIXTURES = "/api/fixtures/"
+export const TEAMS = backend_url + "/api/teams/"
+export const CHECKLIST = backend_url + "/api/checklist/"
+export const SECTIONS = backend_url + "/api/sections/"
+export const QUESTIONS = backend_url + "/api/questions/"
+export const CHECKLIST_ITEM = backend_url + "/api/checklist_item/"
+export const SUBQUESTION = backend_url + "/api/subquestion/"
+export const FIXTURE = backend_url + "/api/fixture/"
+export const FIXTURES = backend_url + "/api/fixtures/"
 
 // Generic
 export const SELECT_TEAM = "SELECT_TEAM"

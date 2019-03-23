@@ -28,6 +28,7 @@ export default class IndexSelect extends Component {
             options = this.props.options
 
         return (
+            <div>
 			<FormGroup controlId={this.props.label}>
 				<ControlLabel>{this.props.label}</ControlLabel>
 				<FormControl 
@@ -40,6 +41,7 @@ export default class IndexSelect extends Component {
                         { options.map((option) => (<option value={option.id} key={Math.floor(Math.random() * Math.floor(10000))}>{option.team_name}</option>)) }
                 </FormControl>
 			</FormGroup>
+      </div>
         )
     }
 }

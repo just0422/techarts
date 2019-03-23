@@ -11,7 +11,8 @@ const mapStateToProps = (store) => {
         ready: store.navbar.ready,
         teams: store.navbar.teams,
         campuses: store.navbar.campuses,
-        currentCampus: store.navbar.currentCampus
+        currentCampus: store.navbar.currentCampus,
+        person_name: store.navbar.person_name
     }
 };
 
@@ -84,7 +85,7 @@ class NavigationBar extends Component {
 
             return (
                 <div>
-                    <Navbar collapseOnSelect>
+                    <Navbar collapseOnSelect fluid>
                         <Navbar.Header>
                             <Navbar.Brand>
                               <a href="/">Tech Arts</a>
@@ -97,6 +98,7 @@ class NavigationBar extends Component {
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>
+  <div class="website-interaction-message-nav">This website is interactive and fully functionional. Feel free to change anything or add new things. All changes will be reset every 15 minutes.</div>
                     { this.props.children }
                 </div>
             )

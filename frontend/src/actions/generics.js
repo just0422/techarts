@@ -25,7 +25,11 @@ export function startChecklist(values){
     return (dispatch) => {
         var { person_name, team } = values;
         var url = "/checklist/" + person_name + "/" + team;
-
+        
+        dispatch({
+          type: consts.SET_PERSON_NAME,
+          payload: values
+        })
         dispatch(push(url));
     }
 }
@@ -34,16 +38,14 @@ export function startChecklist(values){
 export function fetchChecklist(values){
     return (dispatch) => {
         var { person_name, team } = values
-        var url = "/checklist/" + person_name + "/" + team;
+        var url = consts.CHECKLIST + person_name + "/" + team;
 
         dispatch({
             type: consts.FETCH_CHECKLIST,
             payload: values
         })
 
-        console.log("Fetching - /api" + url);
-
-		axios.get("/api" + url)
+		axios.get(url)
             .then((response) => {
                 const { id, person, date, team } = response.data
                 dispatch({
@@ -55,7 +57,6 @@ export function fetchChecklist(values){
                         team: team
                     }
                 })
-                console.log("Got Got");
 
             })
     }

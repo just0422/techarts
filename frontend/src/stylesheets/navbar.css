@@ -1,2 +1,21 @@
-.navbar-item{
+nav{
+  margin-bottom: 0 !important;
 }
+
+.container-fluid{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.website-interaction-message-nav{
+  text-align: center;
+  box-shadow: 0 0 30px #005DAE;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .navbar>.container-fluid .navbar-brand{
+    margin-left: 0 !important
+  }
+}
+

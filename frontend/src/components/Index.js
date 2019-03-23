@@ -83,6 +83,13 @@ class Index extends Component {
         if (this.props.ready){
             return(
                 <div>
+  <div class="website-interaction-message">
+  <div>
+  This website is interactive and fully functionional. Feel free to change anything or add new things. All changes will be reset every 15 minutes.</div>
+  <div>
+  Admin site is located at <a href="http://techapi.justin-maldonado.com/admin" target="_blank">http://techapi.justin-maldonado.com</a>
+  </div>
+  </div>
                 <h1 id="page-title" className="display-4">TechArts Checklists</h1>
 				<Grid>
                     <Formik
