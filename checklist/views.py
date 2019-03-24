@@ -112,7 +112,7 @@ class FixtureListView(generics.ListAPIView):
     def get_queryset(self):
         campus = self.kwargs.get('campus')
         group = self.kwargs.get('group')
-        queryset = Fixture.objects.filter(campus=campus, group=group)
+        queryset = Fixture.objects.filter(campus=campus, group=group).order_by('name', 'channel')
 
         if len(queryset) == 0:
             raise exceptions.NotFound('No Fixtures found')
